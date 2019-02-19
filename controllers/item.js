@@ -44,3 +44,20 @@ exports.createItem = (req, res, next) => {
         })
         .catch(err => console.log(err));
 };
+
+exports.findItemById = (req, res, next) => {
+    const itemId = req.params.itemId;
+
+    Item.findById(itemId)
+        .then(item => {
+            if(!item){
+                return res.status(404).json({error: 'This post is not found'});
+            }
+            res.status(200).json({
+                msg: 'Success on finding that post',
+                item: item
+            });
+        })
+        .catch(err => console.log(err));
+
+};

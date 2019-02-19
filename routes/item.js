@@ -31,5 +31,7 @@ router.post('/',
             .withMessage('Please enter your name that is least 2 characters long and not longer than 30 characters'),
     ],
     itemController.createItem);
+    
+router.get('/:itemId', itemController.findItemById);
 
 module.exports = router;
