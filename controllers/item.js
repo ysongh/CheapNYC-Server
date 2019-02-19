@@ -1,3 +1,5 @@
+const { validationResult } = require("express-validator/check");
+
 const Item = require("../models/Item");
 
 exports.findItems = (req, res, next) => {
@@ -11,13 +13,18 @@ exports.findItems = (req, res, next) => {
 };
 
 exports.createItem = (req, res, next) => {
-    
     const name = req.body.name;
     const price = req.body.price;
     const location = req.body.location;
     const description = req.body.description;
     const company = req.body.company;
     const author = req.body.author;
+    
+    const errors = validationResult(req);
+
+    if(!errors.isEmpty()){
+        return res.status(422).json(errors.array());
+    }
     
     const item = new Item({
         name: name,
