@@ -1,5 +1,15 @@
 const Item = require("../models/Item");
 
+exports.findItems = (req, res, next) => {
+    Item.find()
+        .then(result => {
+            res.status(200).json({
+                msg: "Success on finding all items",
+                items: result
+            });
+        });
+};
+
 exports.createItem = (req, res, next) => {
     
     const name = req.body.name;
