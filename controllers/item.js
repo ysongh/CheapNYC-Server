@@ -3,13 +3,35 @@ const { validationResult } = require("express-validator/check");
 const Item = require("../models/Item");
 
 exports.findItems = (req, res, next) => {
-    Item.find()
-        .then(result => {
-            res.status(200).json({
-                msg: "Success on finding all items",
-                items: result
-            });
-        });
+    const type = req.query.type;
+    
+    switch(type){
+        case 'category':
+            const name = req.query.name;
+            
+            Item.find({category: name})
+                .then(result => {
+                    res.status(200).json({
+                        msg: "Success on finding all items on category " + name,
+                        items: result
+                    });
+                })
+                .catch(err => {
+                    return res.status(500).json({error: err});
+                });
+            break;
+        default:
+            Item.find()
+                .then(result => {
+                    res.status(200).json({
+                        msg: "Success on finding all items",
+                        items: result
+                    });
+                })
+                .catch(err => {
+                    return res.status(500).json({error: err});
+                });
+    }
 };
 
 exports.createItem = (req, res, next) => {
