@@ -7,7 +7,7 @@ exports.findItems = (req, res, next) => {
     
     switch(type){
         case 'category':
-            const name = req.query.name;
+            const name = req.query.categoryName;
             
             Item.find({category: name})
                 .then(result => {

@@ -7,6 +7,10 @@ Find all items posts
 * Link - https://cnycserver.herokuapp.com/items
 * Request - GET
 
+Find all items posts by category
+* Link - https://cnycserver.herokuapp.com/items?type=category&categoryName=food
+* Request - GET
+
 Create a item post
 * Link - https://cnycserver.herokuapp.com/items
 * Request - POST
