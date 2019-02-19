@@ -14,6 +14,7 @@ exports.findItems = (req, res, next) => {
 
 exports.createItem = (req, res, next) => {
     const name = req.body.name;
+    const category = req.body.category;
     const price = req.body.price;
     const location = req.body.location;
     const description = req.body.description;
@@ -28,6 +29,7 @@ exports.createItem = (req, res, next) => {
     
     const item = new Item({
         name: name,
+        category: category,
         price: price,
         location: location,
         description: description,

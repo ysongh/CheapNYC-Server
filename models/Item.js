@@ -7,7 +7,7 @@ const itemSchema = new Schema({
         type: String,
         required: true
     },
-    categroy: {
+    category: {
         type: String,
         required: true
     },
