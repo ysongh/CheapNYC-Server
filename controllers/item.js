@@ -7,12 +7,26 @@ exports.findItems = (req, res, next) => {
     
     switch(type){
         case 'category':
-            const name = req.query.categoryName;
+            const categoryName = req.query.categoryName;
             
-            Item.find({category: name})
+            Item.find({category: categoryName})
                 .then(result => {
                     res.status(200).json({
-                        msg: "Success on finding all items on category " + name,
+                        msg: "Success on finding all items on category " + categoryName,
+                        items: result
+                    });
+                })
+                .catch(err => {
+                    return res.status(500).json({error: err});
+                });
+            break;
+        case 'city':
+            const cityName = req.query.cityName;
+            
+            Item.find({city: cityName})
+                .then(result => {
+                    res.status(200).json({
+                        msg: "Success on finding all items in " + cityName,
                         items: result
                     });
                 })
