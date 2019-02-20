@@ -10,6 +10,12 @@ Find all items posts
 Find all items posts by category
 * Link - https://cnycserver.herokuapp.com/items?type=category&categoryName=food
 * Request - GET
+* Params - Set type to category and put any category on categoryName
+
+Find all items posts by city
+* Link - https://cnycserver.herokuapp.com/items?type=city&cityName=queen
+* Request - GET
+* Params - Set type to city and put any city on cityName
 
 Create a item post
 * Link - https://cnycserver.herokuapp.com/items
