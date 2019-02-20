@@ -22,6 +22,9 @@ router.post('/',
         body('location')
             .isLength({min: 10, max: 70})
             .withMessage('Please enter a vaild location'),
+        body('city')
+            .isLength({min: 2, max: 30})
+            .withMessage('Please enter a city that is least 2 characters long and not longer than 30 characters'),
         body('description')
             .trim()
             .isLength({min: 5, max: 300})

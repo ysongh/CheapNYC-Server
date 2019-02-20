@@ -39,6 +39,7 @@ exports.createItem = (req, res, next) => {
     const category = req.body.category;
     const price = req.body.price;
     const location = req.body.location;
+    const city = req.body.city;
     const description = req.body.description;
     const company = req.body.company;
     const author = req.body.author;
@@ -54,6 +55,7 @@ exports.createItem = (req, res, next) => {
         category: category,
         price: price,
         location: location,
+        city: city,
         description: description,
         company: company,
         author: author
