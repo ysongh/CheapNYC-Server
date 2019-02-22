@@ -1,6 +1,15 @@
 const { validationResult } = require("express-validator/check");
 
 const Item = require("../models/Item");
+const cloudinaryApiKey = require('./config/keys').cloudinaryApiKey;
+const cloudinaryApiSecret = require('./config/keys').cloudinaryApiSecret;
+
+const cloudinary = require('cloudinary');
+cloudinary.config({
+    cloud_name: 'cheapnyc', 
+    api_key: cloudinaryApiKey, 
+    api_secret: cloudinaryApiSecret
+});
 
 exports.findItems = (req, res, next) => {
     const type = req.query.type;
