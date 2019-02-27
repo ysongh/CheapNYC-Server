@@ -20,7 +20,7 @@ Find all items posts by city
 Create a item post
 * Link - https://cnycserver.herokuapp.com/items
 * Request - POST
-* Body - name, price, location, description, company, author
+* Body - name, price, location, description, company, author, image
 
 Find an items by id
 * Link - https://cnycserver.herokuapp.com/items/:itemId
