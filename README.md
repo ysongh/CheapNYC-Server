@@ -18,7 +18,7 @@ Find all items posts by city
 * Params - Set type to city and put any city on cityName
 
 Find all items posts by price range
-* Link - https://cheapnycserver.herokuapp.com/foods?type=price&price1=50&price2=100
+* Link - https://cnycserver.herokuapp.com/items?type=price&price1=50&price2=100
 * Request - GET
 * Params - Set type to price, put low number on price1 and high number on price2
 
