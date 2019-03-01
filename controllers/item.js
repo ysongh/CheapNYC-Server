@@ -43,6 +43,21 @@ exports.findItems = (req, res, next) => {
                     return res.status(500).json({error: err});
                 });
             break;
+        case 'price':
+            const lowPrice = req.query.price1;
+            const highPrice = req.query.price2;
+            
+            Item.find({price: {$lte: highPrice, $gte:lowPrice}})
+                .then(result => {
+                    res.status(200).json({
+                        msg: "Success on finding all items with price range from $" + lowPrice + " to $" + highPrice,
+                        items: result
+                    });
+                })
+                .catch(err => {
+                    return res.status(500).json({error: err});
+                });
+            break;
         default:
             Item.find()
                 .then(result => {
