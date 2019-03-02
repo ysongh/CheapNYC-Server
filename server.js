@@ -6,6 +6,7 @@ const multer = require("multer");
 const db = require('./config/keys').mongoURI;
 
 const itemRoutes = require("./routes/item");
+const reviewRoutes = require("./routes/review");
 
 const app = express();
 
@@ -35,6 +36,7 @@ app.use((req, res, next) => {
 });
 
 app.use('/items', itemRoutes);
+app.use('/items', reviewRoutes);
 
 app.get('/', (req, res) => res.send('It Working'));
 
