@@ -30,3 +30,10 @@ Create a item post
 Find an items by id
 * Link - https://cnycserver.herokuapp.com/items/:itemId
 * Request - GET
+
+## Review
+
+Create a review
+* Link - https://cnycserver.herokuapp.com/items/:itemId/reviews
+* Request - POST
+* Body - name, text
