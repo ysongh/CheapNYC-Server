@@ -142,6 +142,7 @@ exports.findItemById = (req, res, next) => {
     const itemId = req.params.itemId;
 
     Item.findById(itemId)
+        .populate("reviews")
         .then(item => {
             if(!item){
                 return res.status(404).json({error: 'This post is not found'});
