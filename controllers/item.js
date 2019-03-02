@@ -73,25 +73,50 @@ exports.findItems = (req, res, next) => {
 };
 
 exports.createItem = (req, res, next) => {
-    cloudinary.uploader.upload(req.file.path, result => {
-        const image = result.secure_url;
-        const name = req.body.name;
-        const category = req.body.category;
-        const price = req.body.price;
-        const location = req.body.location;
-        const city = req.body.city;
-        const description = req.body.description;
-        const company = req.body.company;
-        const author = req.body.author;
-        
-        const errors = validationResult(req);
+    const name = req.body.name;
+    const category = req.body.category;
+    const price = req.body.price;
+    const location = req.body.location;
+    const city = req.body.city;
+    const description = req.body.description;
+    const company = req.body.company;
+    const author = req.body.author;
+    let image;
     
-        if(!errors.isEmpty()){
-            return res.status(422).json(errors.array());
-        }
+    const errors = validationResult(req);
+
+    if(!errors.isEmpty()){
+        return res.status(422).json(errors.array());
+    }
+    
+    if(req.file){
+        cloudinary.uploader.upload(req.file.path, result => {
+            image = result.secure_url;
+            
+            const item = new Item({
+                image: image,
+                name: name,
+                category: category,
+                price: price,
+                location: location,
+                city: city,
+                description: description,
+                company: company,
+                author: author
+            });
         
+            item.save()
+                .then(result => {
+                    res.status(201).json({
+                        msg: "Success on creating an item post",
+                        item: result
+                    });
+                })
+                .catch(err => console.log(err));
+        });
+    }
+    else{
         const item = new Item({
-            image: image,
             name: name,
             category: category,
             price: price,
@@ -110,7 +135,7 @@ exports.createItem = (req, res, next) => {
                 });
             })
             .catch(err => console.log(err));
-        });
+    }
 };
 
 exports.findItemById = (req, res, next) => {
