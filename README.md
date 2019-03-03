@@ -36,4 +36,4 @@ Find an items by id
 Create a review
 * Link - https://cnycserver.herokuapp.com/items/:itemId/reviews
 * Request - POST
-* Body - name, text
+* Body - name, rating, text
