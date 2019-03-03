@@ -1,3 +1,5 @@
+const { validationResult } = require("express-validator/check");
+
 const Item = require("../models/Item");
 const Review = require("../models/Review");
 
@@ -7,6 +9,12 @@ exports.addReview = (req, res, next) => {
     const rating = req.body.rating;
     const text = req.body.text;
     let error;
+    
+    const errors = validationResult(req);
+
+    if(!errors.isEmpty()){
+        return res.status(422).json(errors.array());
+    }
 
     const reviewData = new Review({
         itemId: itemId,
@@ -14,7 +22,7 @@ exports.addReview = (req, res, next) => {
         rating: rating,
         text: text
     });
-
+    
     Item.findById(itemId)
         .then(item => {
             if(!item){
