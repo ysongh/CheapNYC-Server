@@ -155,3 +155,25 @@ exports.findItemById = (req, res, next) => {
         .catch(err => console.log(err));
 
 };
+
+exports.likeItem = (req, res, next) => {
+    const itemId = req.params.itemId;
+
+    Item.findById(itemId)
+        .then(item => {
+            if(!item){
+                return res.status(404).json({error: 'This post is not found'});
+            }
+            
+            item.likes++;
+            
+            return item.save();
+        })
+        .then(result => {
+            res.status(200).json({
+                msg: 'Success on liking that post',
+                item: result
+            });
+        })
+        .catch(err => console.log(err));
+};
