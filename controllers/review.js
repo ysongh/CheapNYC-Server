@@ -4,12 +4,14 @@ const Review = require("../models/Review");
 exports.addReview = (req, res, next) => {
     const itemId = req.params.itemId;
     const name = req.body.name;
+    const rating = req.body.rating;
     const text = req.body.text;
     let error;
 
     const reviewData = new Review({
         itemId: itemId,
         name: name,
+        rating: rating,
         text: text
     });
 
