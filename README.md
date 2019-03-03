@@ -27,9 +27,13 @@ Create a item post
 * Request - POST
 * Body - name, price, location, description, company, author, image
 
-Find an items by id
+Find an item by id
 * Link - https://cnycserver.herokuapp.com/items/:itemId
 * Request - GET
+
+Like an item by id
+* Link - https://cnycserver.herokuapp.com/items/:itemId/like
+* Request - PUT
 
 ## Review
 
