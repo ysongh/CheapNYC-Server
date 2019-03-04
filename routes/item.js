@@ -42,4 +42,6 @@ router.get('/:itemId', itemController.findItemById);
 
 router.put('/:itemId/like', itemController.likeItem);
 
+router.put('/:itemId/flag', itemController.flagItem);
+
 module.exports = router;
