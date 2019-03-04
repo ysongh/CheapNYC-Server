@@ -25,7 +25,8 @@ Find all items posts by price range
 Create a item post
 * Link - https://cnycserver.herokuapp.com/items
 * Request - POST
-* Body - name, price, location, description, company, author, image
+* Required - name(string), category(string), price(number), location(string), city(string), description(string), company(string), author(string)
+* Optional - image(file)
 
 Find an item by id
 * Link - https://cnycserver.herokuapp.com/items/:itemId
@@ -35,9 +36,13 @@ Like an item by id
 * Link - https://cnycserver.herokuapp.com/items/:itemId/like
 * Request - PUT
 
+Flag an item by id
+* Link - https://cnycserver.herokuapp.com/items/:itemId/flag
+* Request - PUT
+
 ## Review
 
 Create a review
 * Link - https://cnycserver.herokuapp.com/items/:itemId/reviews
 * Request - POST
-* Body - name, rating, text
+* Required - name(string), rating(number), text(string)
