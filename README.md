@@ -31,18 +31,22 @@ Create a item post
 Find an item by id
 * Link - https://cnycserver.herokuapp.com/items/:itemId
 * Request - GET
+* Params - Replace ':itemId' with an id of a item
 
 Like an item by id
 * Link - https://cnycserver.herokuapp.com/items/:itemId/like
 * Request - PUT
+* Params - Replace ':itemId' with an id of a item
 
 Flag an item by id
 * Link - https://cnycserver.herokuapp.com/items/:itemId/flag
 * Request - PUT
+* Params - Replace ':itemId' with an id of a item
 
 ## Review
 
 Create a review
 * Link - https://cnycserver.herokuapp.com/items/:itemId/reviews
 * Request - POST
+* Params - Replace ':itemId' with an id of a item
 * Required - name(string), rating(number), text(string)
