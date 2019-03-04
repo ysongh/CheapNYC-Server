@@ -50,6 +50,10 @@ const itemSchema = new Schema({
     likes:{
         type: Number,
         default: 0
+    },
+    flags:{
+        type: Number,
+        default: 0
     }
 });
 
