@@ -44,9 +44,19 @@ Flag an item by id
 * Params - Replace ':itemId' with an id of a item
 
 ## Review
-
 Create a review
 * Link - https://cnycserver.herokuapp.com/items/:itemId/reviews
 * Request - POST
 * Params - Replace ':itemId' with an id of a item
 * Required - name(string), rating(number), text(string)
+
+## User
+Create an user
+* Link - https://cnycserver.herokuapp.com/users/signup
+* Request - POST
+* Required - name(string), email(string), password(string)
+
+Login
+* Link - https://cnycserver.herokuapp.com/users/login
+* Request - POST
+* Required - email(string), password(string)
