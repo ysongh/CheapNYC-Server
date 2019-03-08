@@ -1,6 +1,8 @@
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 
 const User = require('../models/User');
+const keys = require('../config/keys');
 
 exports.createUser = (req, res, next) => {
     User.findOne({ email: req.body.email })
@@ -43,7 +45,21 @@ exports.login = (req, res) => {
             bcrypt.compare(password, user.password)
                 .then(isMatch => {
                     if(isMatch){
-                        res.json({msg: 'Success'});
+                        const payload = {id: user.id, name: user.name};
+
+                        jwt.sign(
+                            payload,
+                            keys.secretOrKey,
+                            {expiresIn: 3600},
+                            (err, token) => {
+                                if(err){
+                                    return res.status(500).json({error: err});
+                                }
+                                res.json({
+                                    success: true,
+                                    token: 'Bearer ' + token
+                                });
+                        });
                     }
                     else{
                         return res.status(400).json({password: 'Password Incorrect'});
