@@ -13,7 +13,14 @@ exports.addReview = (req, res, next) => {
     const errors = validationResult(req);
 
     if(!errors.isEmpty()){
-        return res.status(422).json(errors.array());
+        let errorList = {};
+        
+        for(let error in errors.array()){
+            let field = errors.array()[error].param;
+            errorList[field] = errors.array()[error].msg;
+        }
+        
+        return res.status(422).json(errorList);
     }
 
     const reviewData = new Review({
