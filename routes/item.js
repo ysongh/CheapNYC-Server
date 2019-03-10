@@ -15,7 +15,7 @@ router.post('/',
             .withMessage('Please enter the name of the item that is least 2 characters long and not longer than 30 characters'),
         body('category')
             .isLength({min: 2, max: 30})
-            .withMessage('Please enter the category that is least 2 characters long and not longer than 30 characters'),
+            .withMessage('Please select the Category'),
         body('price')
             .isNumeric()
             .withMessage('Please enter a vaild price, ex - 1.99'),
@@ -24,7 +24,7 @@ router.post('/',
             .withMessage('Please enter a vaild location'),
         body('city')
             .isLength({min: 2, max: 30})
-            .withMessage('Please enter a city that is least 2 characters long and not longer than 30 characters'),
+            .withMessage('Please select a city'),
         body('description')
             .trim()
             .isLength({min: 5, max: 300})
