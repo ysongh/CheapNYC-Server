@@ -27,6 +27,16 @@ router.post('/signup',
     ],
     userController.createUser);
 
-router.post('/login', userController.login);
+router.post('/login',
+    [
+        body('email')
+            .isEmail()
+            .normalizeEmail()
+            .withMessage('Please enter a vaild email'),
+        body('password')
+            .isLength({min: 5, max: 20})
+            .withMessage('Please enter password that is at least 5 characters long and not longer than 20 characters')
+    ],
+    userController.login);
 
 module.exports = router;

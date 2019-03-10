@@ -48,6 +48,19 @@ exports.createUser = (req, res, next) => {
 };
 
 exports.login = (req, res) => {
+    const errors = validationResult(req);
+
+    if(!errors.isEmpty()){
+        let errorList = {};
+
+        for(let error in errors.array()){
+            let field = errors.array()[error].param;
+            errorList[field] = errors.array()[error].msg;
+        }
+        
+        return res.status(422).json(errorList);
+    }
+    
     const email = req.body.email;
     const password = req.body.password;
 
