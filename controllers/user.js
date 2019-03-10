@@ -1,10 +1,24 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const { validationResult } = require("express-validator/check");
 
 const User = require('../models/User');
 const keys = require('../config/keys');
 
 exports.createUser = (req, res, next) => {
+    const errors = validationResult(req);
+
+    if(!errors.isEmpty()){
+        let errorList = {};
+
+        for(let error in errors.array()){
+            let field = errors.array()[error].param;
+            errorList[field] = errors.array()[error].msg;
+        }
+        
+        return res.status(422).json(errorList);
+    }
+    
     User.findOne({ email: req.body.email })
         .then(user => {
             if(user){
