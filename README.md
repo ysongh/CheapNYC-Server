@@ -54,7 +54,7 @@ Create a review
 Create an user
 * Link - https://cnycserver.herokuapp.com/users/signup
 * Request - POST
-* Required - name(string), email(string), password(string)
+* Required - name(string), email(string), password(string), confirmPassword(string)
 
 Login
 * Link - https://cnycserver.herokuapp.com/users/login
