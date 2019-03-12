@@ -22,11 +22,11 @@ Find all items posts by price range
 * Request - GET
 * Params - Set type to price, put low number on price1 and high number on price2
 
-Create a item post
+Create an item post
 * Link - https://cnycserver.herokuapp.com/items
 * Request - POST
-* Required - name(string), category(string), price(number), location(string), city(string), description(string), company(string), author(string)
-* Optional - image(file)
+* Required - name(string), category(string), price(number), location(string), city(string), description(string), company(string)
+* Optional - image(file), author(string)
 
 Find an item by id
 * Link - https://cnycserver.herokuapp.com/items/:itemId
