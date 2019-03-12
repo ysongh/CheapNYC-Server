@@ -80,8 +80,13 @@ exports.createItem = (req, res, next) => {
     const city = req.body.city;
     const description = req.body.description;
     const company = req.body.company;
-    const author = req.body.author;
+    let author = "Guest";
     let image;
+    
+    if(req.body.author){
+        author = req.body.author;
+    }
+    
     
     const errors = validationResult(req);
 

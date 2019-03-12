@@ -31,10 +31,7 @@ router.post('/',
             .withMessage('Please enter a description that is least 5 characters long and not longer than 300 characters'),
         body('company')
             .isLength({min: 2, max: 50})
-            .withMessage('Please enter a name company that is least 2 characters long and not longer than 50 characters'),
-        body('author')
-            .isLength({min: 2, max: 30})
-            .withMessage('Please enter your name that is least 2 characters long and not longer than 30 characters'),
+            .withMessage('Please enter a name company that is least 2 characters long and not longer than 50 characters')
     ],
     itemController.createItem);
     

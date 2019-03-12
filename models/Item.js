@@ -38,8 +38,7 @@ const itemSchema = new Schema({
         default: Date.now
     },
     author: {
-        type: String,
-        required: true
+        type: String
     },
     reviews: [
         {
