@@ -37,11 +37,13 @@ Like an item by id
 * Link - https://cnycserver.herokuapp.com/items/:itemId/like
 * Request - PUT
 * Params - Replace ':itemId' with an id of a item
+* Login is required
 
 Flag an item by id
 * Link - https://cnycserver.herokuapp.com/items/:itemId/flag
 * Request - PUT
 * Params - Replace ':itemId' with an id of a item
+* Login is required
 
 ## Review
 Create a review
