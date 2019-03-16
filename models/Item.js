@@ -46,10 +46,12 @@ const itemSchema = new Schema({
             ref: 'Review'
         }
     ],
-    likes:{
-        type: Number,
-        default: 0
-    },
+    likes:[
+        {
+            type: Schema.Types.ObjectId,
+            ref: 'User'
+        }
+    ],
     flags:{
         type: Number,
         default: 0
