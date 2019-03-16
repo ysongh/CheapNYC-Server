@@ -204,8 +204,14 @@ exports.flagItem = (req, res, next) => {
             if(!item){
                 return res.status(404).json({error: 'This post is not found'});
             }
-
-            item.flags++;
+            
+            for(let flag of item.flags){
+                if(flag.toString() === req.user.id){
+                    return res.status(400).json({alreadyliked: 'You already flag this post'});
+                }
+            }
+            
+            item.flags.unshift(req.user.id);
 
             return item.save();
         })

@@ -52,10 +52,12 @@ const itemSchema = new Schema({
             ref: 'User'
         }
     ],
-    flags:{
-        type: Number,
-        default: 0
-    }
+    flags:[
+        {
+            type: Schema.Types.ObjectId,
+            ref: 'User'
+        }
+    ]
 });
 
 module.exports = mongoose.model('Item', itemSchema); 

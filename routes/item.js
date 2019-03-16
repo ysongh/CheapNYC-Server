@@ -40,6 +40,6 @@ router.get('/:itemId', itemController.findItemById);
 
 router.put('/:itemId/like', passport.authenticate('jwt', {session: false}), itemController.likeItem);
 
-router.put('/:itemId/flag', itemController.flagItem);
+router.put('/:itemId/flag', passport.authenticate('jwt', {session: false}), itemController.flagItem);
 
 module.exports = router;
