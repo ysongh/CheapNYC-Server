@@ -177,7 +177,13 @@ exports.likeItem = (req, res, next) => {
                 return res.status(404).json({error: 'This post is not found'});
             }
             
-            item.likes++;
+            for(let like of item.likes){
+                if(like.toString() === req.user.id){
+                    return res.status(400).json({alreadyliked: 'You already liked this post'});
+                }
+            }
+            
+            item.likes.unshift(req.user.id);
             
             return item.save();
         })

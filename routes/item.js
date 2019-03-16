@@ -1,4 +1,5 @@
 const express = require("express");
+const passport = require('passport');
 const { body } = require("express-validator/check");
 
 const itemController = require("../controllers/item");
@@ -37,7 +38,7 @@ router.post('/',
     
 router.get('/:itemId', itemController.findItemById);
 
-router.put('/:itemId/like', itemController.likeItem);
+router.put('/:itemId/like', passport.authenticate('jwt', {session: false}), itemController.likeItem);
 
 router.put('/:itemId/flag', itemController.flagItem);
 
