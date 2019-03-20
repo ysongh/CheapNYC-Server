@@ -57,6 +57,7 @@ Create an user
 * Link - https://cnycserver.herokuapp.com/users/signup
 * Request - POST
 * Required - name(string), email(string), password(string), confirmPassword(string)
+* Optional - image(file)
 
 Login
 * Link - https://cnycserver.herokuapp.com/users/login
