@@ -5,6 +5,16 @@ const { validationResult } = require("express-validator/check");
 const User = require('../models/User');
 const keys = require('../config/keys');
 
+const cloudinaryApiKey = require('../config/keys').cloudinaryApiKey;
+const cloudinaryApiSecret = require('../config/keys').cloudinaryApiSecret;
+
+const cloudinary = require('cloudinary');
+cloudinary.config({
+    cloud_name: 'cheapnyc', 
+    api_key: cloudinaryApiKey, 
+    api_secret: cloudinaryApiSecret
+});
+
 exports.createUser = (req, res, next) => {
     const errors = validationResult(req);
 
@@ -25,9 +35,10 @@ exports.createUser = (req, res, next) => {
                 return res.status(400).json({email: 'Email Already Exists'});
             }
             else{
-                const newUser = new User({
+                let newUser = new User({
                     name: req.body.name,
                     email: req.body.email,
+                    image: "",
                     password: req.body.password
                 });
 
@@ -37,10 +48,23 @@ exports.createUser = (req, res, next) => {
                             return res.status(500).json({error: err});
                         }
                         newUser.password = hash;
-                        newUser
-                            .save()
-                            .then(user => res.json(user))
-                            .catch(err => console.log(err));
+                        
+                        if(req.file){
+                            cloudinary.uploader.upload(req.file.path, result => {
+                                newUser.image = result.secure_url;
+                                
+                                newUser
+                                    .save()
+                                    .then(user => res.json(user))
+                                    .catch(err => console.log(err));
+                            });
+                        }
+                        else{
+                            newUser
+                                .save()
+                                .then(user => res.json(user))
+                                .catch(err => console.log(err));
+                        }
                     });
                 });
             }
