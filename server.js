@@ -1,10 +1,13 @@
 const express = require('express');
+const expressGraphQL = require('express-graphql');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const multer = require("multer");
-const passport = require('passport')
+const passport = require('passport');
 
 const db = require('./config/keys').mongoURI;
+
+const graphqlSchema = require('./graphql/schema');
 
 const itemRoutes = require("./routes/item");
 const reviewRoutes = require("./routes/review");
@@ -36,6 +39,11 @@ app.use((req, res, next) => {
 
     next();
 });
+
+app.use('/graphql', expressGraphQL({
+    schema: graphqlSchema,
+    graphiql: true
+}));
 
 app.use('/items', itemRoutes);
 app.use('/items', reviewRoutes);
