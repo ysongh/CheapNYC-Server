@@ -216,6 +216,12 @@ exports.flagItem = (req, res, next) => {
             return item.save();
         })
         .then(result => {
+            if(result.flags.length >= 10){
+                return Item.findByIdAndRemove(result._id);
+            }
+            return result;
+        })
+        .then(result => {
             res.status(200).json({
                 msg: 'Success on flaging that post',
                 item: result
