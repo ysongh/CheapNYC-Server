@@ -5,8 +5,8 @@ module.exports = buildSchema(
         type User{
             _id: ID!
             name: String!
-            email: String!
-            password: String!
+            email: String
+            password: String
             image: String
             date: String!
         }
