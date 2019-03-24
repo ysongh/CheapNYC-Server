@@ -10,11 +10,11 @@ module.exports = buildSchema(
             image: String
             date: String!
         }
-        type Query{
+        type Query {
             users: [User!]!
         }
         schema {
-            query: Query
+            query: Query 
         }
     `
 ); 

@@ -8,6 +8,7 @@ const passport = require('passport');
 const db = require('./config/keys').mongoURI;
 
 const graphqlSchema = require('./graphql/schema');
+const graphqlResolver = require('./graphql/resolvers');
 
 const itemRoutes = require("./routes/item");
 const reviewRoutes = require("./routes/review");
@@ -42,6 +43,7 @@ app.use((req, res, next) => {
 
 app.use('/graphql', expressGraphQL({
     schema: graphqlSchema,
+    rootValue: graphqlResolver,
     graphiql: true
 }));
 
