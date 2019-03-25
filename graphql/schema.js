@@ -12,6 +12,7 @@ module.exports = buildSchema(
         }
         type Query {
             users: [User!]!
+            userById(id: ID!): User! 
         }
         schema {
             query: Query 
