@@ -63,3 +63,10 @@ Login
 * Link - https://cnycserver.herokuapp.com/users/login
 * Request - POST
 * Required - email(string), password(string)
+
+Edit an user
+* Link - https://cnycserver.herokuapp.com/users/:userId/edit
+* Request - PUT
+* Params - Replace ':userId' with an id of an user
+* Required - name(string)
+* Login is required
