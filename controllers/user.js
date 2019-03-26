@@ -118,3 +118,38 @@ exports.login = (req, res) => {
                 });
         });
 };
+
+exports.editUser = (req, res) => {
+    const errors = validationResult(req);
+
+    if(!errors.isEmpty()){
+        return res.status(422).json(errors.array());
+    }
+    
+    const userId = req.params.userId;
+    const name = req.body.name;
+    
+    User.findById(userId)
+        .then(user => {
+            if(!user){
+                return res.status(404).json({error: 'This user does not exist'});
+            }
+            
+            if(user._id.toString() !== req.user.id){
+                return res.status(403).json({error: 'You are not allow to edit this user'});
+            }
+            
+            user.name = name;
+            
+            return user.save();
+        })
+        .then(result => {
+            res.status(200).json({
+                msg: 'Success on editing that user',
+                user: result
+            });
+        })
+        .catch(err => {
+            return res.status(500).json({error: err});
+        });
+};

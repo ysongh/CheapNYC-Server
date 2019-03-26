@@ -1,5 +1,6 @@
 const express = require("express");
 const { body } = require("express-validator/check");
+const passport = require('passport');
 
 const userController = require("../controllers/user");
 
@@ -38,5 +39,14 @@ router.post('/login',
             .withMessage('Please enter password that is at least 5 characters long and not longer than 20 characters')
     ],
     userController.login);
+    
+router.put('/:userId/edit', passport.authenticate('jwt', {session: false}),
+    [
+        body('name')
+            .trim()
+            .isLength({min: 1, max: 20})
+            .withMessage('Please enter name that is at least 1 characters long and not longer than 20 characters'),
+    ],
+    userController.editUser);
 
 module.exports = router;
