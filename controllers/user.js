@@ -153,3 +153,32 @@ exports.editUser = (req, res) => {
             return res.status(500).json({error: err});
         });
 };
+
+exports.changeUserImage = (req, res) => {
+    const userId = req.params.userId;
+    
+    User.findById(userId)
+        .then(user => {
+            if(!user){
+                return res.status(404).json({error: 'This user does not exist'});
+            }
+            
+            if(user._id.toString() !== req.user.id){
+                return res.status(403).json({error: 'You are not allow to edit this user'});
+            }
+            
+            cloudinary.uploader.upload(req.file.path, result => {
+                user.image = result.secure_url;
+                return user.save();
+            });
+        })
+        .then(result => {
+            res.status(200).json({
+                msg: 'Success on changing that image',
+                user: result
+            });
+        })
+        .catch(err => {
+            return res.status(500).json({error: err});
+        });
+};

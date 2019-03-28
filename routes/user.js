@@ -48,5 +48,7 @@ router.put('/:userId/edit', passport.authenticate('jwt', {session: false}),
             .withMessage('Please enter name that is at least 1 characters long and not longer than 20 characters'),
     ],
     userController.editUser);
+    
+router.put('/:userId/edit-image', passport.authenticate('jwt', {session: false}), userController.changeUserImage);
 
 module.exports = router;
