@@ -169,6 +169,14 @@ exports.changeUserImage = (req, res) => {
                 return res.status(403).json({error: 'You are not allow to edit this user'});
             }
             
+            if(user.image_id){
+                cloudinary.uploader.destroy(user.image_id, (result, err) => {
+                    if(err){
+                        console.log(err);
+                    }
+                });
+            }
+            
             cloudinary.uploader.upload(req.file.path, result => {
                 user.image = result.secure_url;
                 user.image_id = result.public_id;
