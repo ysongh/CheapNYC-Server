@@ -70,3 +70,10 @@ Edit an user
 * Params - Replace ':userId' with an id of an user
 * Required - name(string)
 * Login is required
+
+Change the user image
+* Link - https://cnycserver.herokuapp.com/users/:userId/edit-image
+* Request - PUT
+* Params - Replace ':userId' with an id of an user
+* Required - image(file)
+* Login is required
