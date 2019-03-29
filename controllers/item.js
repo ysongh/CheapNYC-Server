@@ -82,6 +82,7 @@ exports.createItem = (req, res, next) => {
     const company = req.body.company;
     let author = "Guest";
     let image;
+    let image_id;
     
     if(req.body.author){
         author = req.body.author;
@@ -104,9 +105,11 @@ exports.createItem = (req, res, next) => {
     if(req.file){
         cloudinary.uploader.upload(req.file.path, result => {
             image = result.secure_url;
+            image_id = result.public_id;
             
             const item = new Item({
                 image: image,
+                image_id: image_id,
                 name: name,
                 category: category,
                 price: price,

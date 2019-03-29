@@ -39,6 +39,7 @@ exports.createUser = (req, res, next) => {
                     name: req.body.name,
                     email: req.body.email,
                     image: "",
+                    image_id: "",
                     password: req.body.password
                 });
 
@@ -52,6 +53,7 @@ exports.createUser = (req, res, next) => {
                         if(req.file){
                             cloudinary.uploader.upload(req.file.path, result => {
                                 newUser.image = result.secure_url;
+                                newUser.image_id = result.public_id;
                                 
                                 newUser
                                     .save()
@@ -169,13 +171,15 @@ exports.changeUserImage = (req, res) => {
             
             cloudinary.uploader.upload(req.file.path, result => {
                 user.image = result.secure_url;
-                return user.save();
-            });
-        })
-        .then(result => {
-            res.status(200).json({
-                msg: 'Success on changing that image',
-                user: result
+                user.image_id = result.public_id;
+                
+                user.save()
+                    .then(result => {
+                    res.status(200).json({
+                        msg: 'Success on changing that image',
+                        user: result
+                    });
+                });
             });
         })
         .catch(err => {

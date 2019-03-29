@@ -33,6 +33,9 @@ const itemSchema = new Schema({
     image: {
         type: String
     },
+    image_id: {
+        type: String
+    },
     date: {
         type: Date,
         default: Date.now
