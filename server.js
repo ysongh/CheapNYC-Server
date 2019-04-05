@@ -13,6 +13,7 @@ const graphqlResolver = require('./graphql/resolvers');
 const itemRoutes = require("./routes/item");
 const reviewRoutes = require("./routes/review");
 const userRoutes = require("./routes/user");
+const reportRoutes = require("./routes/report");
 
 const app = express();
 
@@ -52,6 +53,7 @@ app.use('/graphql', expressGraphQL({
 
 app.use('/items', itemRoutes);
 app.use('/items', reviewRoutes);
+app.use('/items', reportRoutes);
 app.use('/users', userRoutes);
 
 app.get('/', (req, res) => res.send('It Working'));
