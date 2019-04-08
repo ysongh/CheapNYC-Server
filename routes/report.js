@@ -6,6 +6,8 @@ const reportController = require("../controllers/report");
 
 const router = express.Router();
 
+router.get('/report/allreport', reportController.getAllReport);
+
 router.post('/:itemId/report', passport.authenticate('jwt', {session: false}),
     [
         body('text')

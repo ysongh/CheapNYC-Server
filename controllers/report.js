@@ -3,6 +3,19 @@ const { validationResult } = require("express-validator/check");
 const Item = require("../models/Item");
 const Report = require("../models/Report");
 
+exports.getAllReport = (req, res, next) => {
+    Report.find()
+        .then(result => {
+            res.status(200).json({
+                msg: "Success on finding all reports",
+                reports: result
+            });
+        })
+        .catch(err => {
+            return res.status(500).json({error: err});
+        });
+};
+
 exports.addReport = (req, res, next) => {
     const itemId = req.params.itemId;
     const name = req.user.name;
