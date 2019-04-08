@@ -77,3 +77,15 @@ Change the user image
 * Params - Replace ':userId' with an id of an user
 * Required - image(file)
 * Login is required
+
+## Report
+Find all reports
+* Link - https://cnycserver.herokuapp.com/items/report/allreport
+* Request - GET
+
+Report an item
+* Link - https://cnycserver.herokuapp.com/items/:itemId/report
+* Request - POST
+* Params - Replace ':itemId' with an id of a item
+* Required - text(string)
+* Login is required
