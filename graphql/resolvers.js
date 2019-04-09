@@ -1,4 +1,5 @@
 const User = require('../models/User');
+const Item = require('../models/Item');
 
 module.exports = {
     users: () => {
@@ -19,6 +20,17 @@ module.exports = {
                     return null;
                 }
                 return { ...user._doc, _id: user.id, email: null, password: null };
+            })
+            .catch(err => {
+                console.log(err);
+            });
+     },
+     items:() => {
+         return Item.find()
+            .then(items => {
+                return items.map(item => {
+                    return { ...item._doc, _id: item.id };
+                });
             })
             .catch(err => {
                 console.log(err);

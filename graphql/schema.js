@@ -5,16 +5,16 @@ module.exports = buildSchema(
         type Item{
             _id: ID!
             name: String!
-            category: String
-            price: Int
-            company: String
-            location: String
-            city: String
-            description: String
+            category: String!
+            price: Int!
+            company: String!
+            location: String!
+            city: String!
+            description: String!
             image: String
             image_id: String
-            date: String
-            author: String
+            date: String!
+            author: String!
         }
         type User{
             _id: ID!
@@ -25,7 +25,7 @@ module.exports = buildSchema(
             date: String!
         }
         type Query {
-            item: [Item!]!
+            items: [Item!]!
             users: [User!]!
             userById(id: ID!): User! 
         }
