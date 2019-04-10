@@ -25,8 +25,8 @@ Find all items posts by price range
 Create an item post
 * Link - https://cnycserver.herokuapp.com/items
 * Request - POST
-* Required - name(string), category(string), price(number), location(string), city(string), description(string), company(string)
-* Optional - image(file), author(string)
+* Required Fields - name(string), category(string), price(number), location(string), city(string), description(string), company(string)
+* Optional Fields - image(file), author(string)
 
 Find an item by id
 * Link - https://cnycserver.herokuapp.com/items/:itemId
@@ -50,32 +50,32 @@ Create a review
 * Link - https://cnycserver.herokuapp.com/items/:itemId/reviews
 * Request - POST
 * Params - Replace ':itemId' with an id of a item
-* Required - name(string), rating(number), text(string)
+* Required Fields - name(string), rating(number), text(string)
 
 ## User
 Create an user
 * Link - https://cnycserver.herokuapp.com/users/signup
 * Request - POST
-* Required - name(string), email(string), password(string), confirmPassword(string)
-* Optional - image(file)
+* Required Fields - name(string), email(string), password(string), confirmPassword(string)
+* Optional Fields - image(file)
 
 Login
 * Link - https://cnycserver.herokuapp.com/users/login
 * Request - POST
-* Required - email(string), password(string)
+* Required Fields - email(string), password(string)
 
 Edit an user
 * Link - https://cnycserver.herokuapp.com/users/:userId/edit
 * Request - PUT
 * Params - Replace ':userId' with an id of an user
-* Required - name(string)
+* Required Fields - name(string)
 * Login is required
 
 Change the user image
 * Link - https://cnycserver.herokuapp.com/users/:userId/edit-image
 * Request - PUT
 * Params - Replace ':userId' with an id of an user
-* Required - image(file)
+* Required Fields - image(file)
 * Login is required
 
 ## Report
@@ -87,5 +87,5 @@ Report an item
 * Link - https://cnycserver.herokuapp.com/items/:itemId/report
 * Request - POST
 * Params - Replace ':itemId' with an id of a item
-* Required - text(string)
+* Required Fields - text(string)
 * Login is required
