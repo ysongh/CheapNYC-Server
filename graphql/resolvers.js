@@ -24,9 +24,9 @@ module.exports = {
             .catch(err => {
                 console.log(err);
             });
-     },
-     items:() => {
-         return Item.find()
+    },
+    items:() => {
+        return Item.find()
             .then(items => {
                 return items.map(item => {
                     return { ...item._doc, _id: item.id };
@@ -35,16 +35,51 @@ module.exports = {
             .catch(err => {
                 console.log(err);
             });
-     },
-     itemsByFilter:({ category, city, price1, price2 }) => {
-         return Item.find({ category: category, city: city, price: {$lte: price2, $gte:price1} })
-            .then(items => {
-                return items.map(item => {
-                    return { ...item._doc, _id: item.id };
+    },
+    itemsByFilter:({ category, city, price1, price2 }) => {
+        if(category && city && price1 !== -1){
+            return Item.find({ category: category, city: city, price: {$lte: price2, $gte:price1} })
+                .then(items => {
+                    return items.map(item => {
+                        return { ...item._doc, _id: item.id };
+                    });
+                })
+                .catch(err => {
+                    console.log(err);
                 });
-            })
-            .catch(err => {
-                console.log(err);
-            });
-     }
+        }
+        if(category && city && price1 === -1){
+            return Item.find({ category: category, city: city })
+                .then(items => {
+                    return items.map(item => {
+                        return { ...item._doc, _id: item.id };
+                    });
+                })
+                .catch(err => {
+                    console.log(err);
+                });
+        }
+        if(category && !city && price1 !== -1){
+            return Item.find({ category: category, price: {$lte: price2, $gte:price1} })
+                .then(items => {
+                    return items.map(item => {
+                        return { ...item._doc, _id: item.id };
+                    });
+                })
+                .catch(err => {
+                    console.log(err);
+                });
+        }
+        if(!category && city && price1 !== -1){
+            return Item.find({ city: city, price: {$lte: price2, $gte:price1} })
+                .then(items => {
+                    return items.map(item => {
+                        return { ...item._doc, _id: item.id };
+                    });
+                })
+                .catch(err => {
+                    console.log(err);
+                });
+        }
+    }
 };
