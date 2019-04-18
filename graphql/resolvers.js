@@ -81,5 +81,49 @@ module.exports = {
                     console.log(err);
                 });
         }
+        if(category && !city && price1 === -1){
+            return Item.find({ category: category })
+                .then(items => {
+                    return items.map(item => {
+                        return { ...item._doc, _id: item.id };
+                    });
+                })
+                .catch(err => {
+                    console.log(err);
+                });
+        }
+        if(!category && city && price1 === -1){
+            return Item.find({ city: city })
+                .then(items => {
+                    return items.map(item => {
+                        return { ...item._doc, _id: item.id };
+                    });
+                })
+                .catch(err => {
+                    console.log(err);
+                });
+        }
+        if(!category && !city && price1 !== -1){
+            return Item.find({ price: {$lte: price2, $gte:price1} })
+                .then(items => {
+                    return items.map(item => {
+                        return { ...item._doc, _id: item.id };
+                    });
+                })
+                .catch(err => {
+                    console.log(err);
+                });
+        }
+        if(!category && !city && price1 === -1){
+            return Item.find()
+                .then(items => {
+                    return items.map(item => {
+                        return { ...item._doc, _id: item.id };
+                    });
+                })
+                .catch(err => {
+                    console.log(err);
+                });
+        }
     }
 };
