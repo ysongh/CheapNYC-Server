@@ -27,6 +27,7 @@ module.exports = {
     },
     items:() => {
         return Item.find()
+            .sort('-date')
             .then(items => {
                 return items.map(item => {
                     return { ...item._doc, _id: item.id };
@@ -39,6 +40,7 @@ module.exports = {
     itemsByFilter:({ category, city, price1, price2 }) => {
         if(category && city && price1 !== -1){
             return Item.find({ category: category, city: city, price: {$lte: price2, $gte:price1} })
+                .sort('-date')
                 .then(items => {
                     return items.map(item => {
                         return { ...item._doc, _id: item.id };
@@ -50,6 +52,7 @@ module.exports = {
         }
         if(category && city && price1 === -1){
             return Item.find({ category: category, city: city })
+                .sort('-date')
                 .then(items => {
                     return items.map(item => {
                         return { ...item._doc, _id: item.id };
@@ -61,6 +64,7 @@ module.exports = {
         }
         if(category && !city && price1 !== -1){
             return Item.find({ category: category, price: {$lte: price2, $gte:price1} })
+                .sort('-date')
                 .then(items => {
                     return items.map(item => {
                         return { ...item._doc, _id: item.id };
@@ -72,6 +76,7 @@ module.exports = {
         }
         if(!category && city && price1 !== -1){
             return Item.find({ city: city, price: {$lte: price2, $gte:price1} })
+                .sort('-date')
                 .then(items => {
                     return items.map(item => {
                         return { ...item._doc, _id: item.id };
@@ -83,6 +88,7 @@ module.exports = {
         }
         if(category && !city && price1 === -1){
             return Item.find({ category: category })
+                .sort('-date')
                 .then(items => {
                     return items.map(item => {
                         return { ...item._doc, _id: item.id };
@@ -94,6 +100,7 @@ module.exports = {
         }
         if(!category && city && price1 === -1){
             return Item.find({ city: city })
+                .sort('-date')
                 .then(items => {
                     return items.map(item => {
                         return { ...item._doc, _id: item.id };
@@ -105,6 +112,7 @@ module.exports = {
         }
         if(!category && !city && price1 !== -1){
             return Item.find({ price: {$lte: price2, $gte:price1} })
+                .sort('-date')
                 .then(items => {
                     return items.map(item => {
                         return { ...item._doc, _id: item.id };
@@ -116,6 +124,7 @@ module.exports = {
         }
         if(!category && !city && price1 === -1){
             return Item.find()
+                .sort('-date')
                 .then(items => {
                     return items.map(item => {
                         return { ...item._doc, _id: item.id };
