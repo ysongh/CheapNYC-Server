@@ -87,5 +87,5 @@ Report an item
 * Link - https://cnycserver.herokuapp.com/items/:itemId/report
 * Request - POST
 * Params - Replace ':itemId' with an id of a item
-* Required Fields - text(string)
+* Required Fields - text(string), comments(string)
 * Login is required
