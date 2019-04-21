@@ -20,6 +20,7 @@ exports.addReport = (req, res, next) => {
     const itemId = req.params.itemId;
     const name = req.user.name;
     const text = req.body.text;
+    const comments = req.body.comments;
     let error;
     
     const errors = validationResult(req);
@@ -38,7 +39,8 @@ exports.addReport = (req, res, next) => {
     const reportData = new Report({
         itemId: itemId,
         name: name,
-        text: text
+        text: text,
+        comments: comments
     });
     
     Item.findById(itemId)

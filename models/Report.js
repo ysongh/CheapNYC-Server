@@ -11,6 +11,10 @@ const reportSchema = new Schema({
         type: String,
         required: true
     },
+    comment:{
+        type: String,
+        required: true
+    },
     date: {
         type: Date,
         default: Date.now
