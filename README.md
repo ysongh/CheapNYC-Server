@@ -33,6 +33,12 @@ Find an item by id
 * Request - GET
 * Params - Replace ':itemId' with an id of a item
 
+Edit an item by id
+* Link - https://cnycserver.herokuapp.com/items/:itemId
+* Request - Put
+* Params - Replace ':itemId' with an id of a item
+* Required Fields - name(string), category(string), price(number), location(string), city(string), description(string), company(string)
+
 Like an item by id
 * Link - https://cnycserver.herokuapp.com/items/:itemId/like
 * Request - PUT
