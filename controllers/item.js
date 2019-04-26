@@ -153,6 +153,58 @@ exports.createItem = (req, res, next) => {
     }
 };
 
+exports.editItem = (req, res, next) => {
+    const itemId = req.params.itemId;
+    const name = req.body.name;
+    const category = req.body.category;
+    const price = req.body.price;
+    const location = req.body.location;
+    const city = req.body.city;
+    const description = req.body.description;
+    const company = req.body.company;
+    let image;
+    let image_id;
+    
+    const errors = validationResult(req);
+
+    if(!errors.isEmpty()){
+        let errorList = {};
+        
+        for(let error in errors.array()){
+            let field = errors.array()[error].param;
+            errorList[field] = errors.array()[error].msg;
+        }
+        
+        return res.status(422).json(errorList);
+    }
+    
+    Item.findById(itemId)
+        .then(item => {
+            if(!item){
+                return res.status(404).json({error: 'This post is not found'});
+            }
+            
+            item.name = name;
+            item.category = category;
+            item.price = price;
+            item.location = location;
+            item.city = city;
+            item.description = description;
+            item.company = company;
+            
+            return item.save();
+        })
+        .then(result => {
+            res.status(201).json({
+                msg: "Success on editing that post",
+                item: result
+            });
+        })
+        .catch(err => {
+            return res.status(500).json({error: err});
+        });
+};
+
 exports.findItemById = (req, res, next) => {
     const itemId = req.params.itemId;
 

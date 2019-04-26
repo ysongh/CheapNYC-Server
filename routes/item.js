@@ -38,7 +38,7 @@ router.post('/',
     
 router.get('/:itemId', itemController.findItemById);
 
-router.put('/',
+router.put('/:itemId',
     [
         body('name')
             .trim()
@@ -64,7 +64,7 @@ router.put('/',
             .isLength({min: 2, max: 50})
             .withMessage('Please enter a name company that is least 2 characters long and not longer than 50 characters')
     ],
-    itemController.createItem);
+    itemController.editItem);
 
 router.put('/:itemId/like', passport.authenticate('jwt', {session: false}), itemController.likeItem);
 
