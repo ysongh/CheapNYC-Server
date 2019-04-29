@@ -1,6 +1,7 @@
 const { validationResult } = require("express-validator/check");
 
 const Item = require("../models/Item");
+const User = require("../models/User");
 const cloudinaryApiKey = require('../config/keys').cloudinaryApiKey;
 const cloudinaryApiSecret = require('../config/keys').cloudinaryApiSecret;
 
@@ -283,4 +284,33 @@ exports.flagItem = (req, res, next) => {
             });
         })
         .catch(err => console.log(err));
+};
+
+exports.addFavorite = (req, res, next) => {
+    const itemId = req.params.itemId;
+    const userId = req.user.id;
+    const userName = req.user.name;
+    
+    Item.findById(itemId)
+        .then(item => {
+            if(!item){
+                return res.status(404).json({error: 'This post is not found'});
+            }
+            
+            User.findById(userId)
+                .then(user => {
+                    user.favorites.unshift({ id: item.id, name: item.name});
+                    
+                    return user.save();
+                })
+                .then(result => {
+                    res.status(200).json({
+                        msg: 'Success on favoriting that post',
+                        user: result
+                    });
+                })
+                .catch(err => console.log(err));
+        })
+        .catch(err => console.log(err));
+        
 };

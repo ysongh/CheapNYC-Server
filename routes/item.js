@@ -70,4 +70,6 @@ router.put('/:itemId/like', passport.authenticate('jwt', {session: false}), item
 
 router.put('/:itemId/flag', passport.authenticate('jwt', {session: false}), itemController.flagItem);
 
+router.put('/:itemId/favorite', passport.authenticate('jwt', {session: false}), itemController.addFavorite);
+
 module.exports = router;
