@@ -51,6 +51,12 @@ Flag an item by id
 * Params - Replace ':itemId' with an id of a item
 * Login is required
 
+Add an item to user's favorite list
+* Link - https://cnycserver.herokuapp.com/items/:itemId/favorite
+* Request - PUT
+* Params - Replace ':itemId' with an id of a item
+* Login is required
+
 ## Review
 Create a review
 * Link - https://cnycserver.herokuapp.com/items/:itemId/reviews
