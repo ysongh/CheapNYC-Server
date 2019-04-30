@@ -28,7 +28,7 @@ module.exports = buildSchema(
             favorites: [Favorite!]!
         }
         type Favorite{
-            _id: ID!
+            id: ID!
             name: String!
         }
         type Query {

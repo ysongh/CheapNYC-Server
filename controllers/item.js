@@ -289,6 +289,7 @@ exports.flagItem = (req, res, next) => {
 exports.addFavorite = (req, res, next) => {
     const itemId = req.params.itemId;
     const userId = req.user.id;
+    console.log(itemId);
     
     Item.findById(itemId)
         .then(item => {
@@ -298,8 +299,13 @@ exports.addFavorite = (req, res, next) => {
             
             User.findById(userId)
                 .then(user => {
-                    user.favorites.unshift({ id: item.id, name: item.name});
+                    for(let favorite of user.favorites){
+                        if(favorite.id === itemId){
+                            return res.status(400).json({duplicate: 'You already favorite this post'});
+                        }
+                    }
                     
+                    user.favorites.unshift({ id: itemId, name: item.name});
                     return user.save();
                 })
                 .then(result => {
