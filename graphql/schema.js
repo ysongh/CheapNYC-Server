@@ -23,6 +23,13 @@ module.exports = buildSchema(
             password: String
             image: String
             date: String!
+            title: String
+            point: Int!
+            favorites: [Favorite!]!
+        }
+        type Favorite{
+            _id: ID!
+            name: String!
         }
         type Query {
             items: [Item!]!

@@ -289,7 +289,6 @@ exports.flagItem = (req, res, next) => {
 exports.addFavorite = (req, res, next) => {
     const itemId = req.params.itemId;
     const userId = req.user.id;
-    const userName = req.user.name;
     
     Item.findById(itemId)
         .then(item => {
