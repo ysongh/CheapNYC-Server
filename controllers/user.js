@@ -130,6 +130,7 @@ exports.editUser = (req, res) => {
     
     const userId = req.params.userId;
     const name = req.body.name;
+    const title = req.body.title;
     
     User.findById(userId)
         .then(user => {
@@ -142,6 +143,7 @@ exports.editUser = (req, res) => {
             }
             
             user.name = name;
+            user.title = title;
             
             return user.save();
         })
