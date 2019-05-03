@@ -26,8 +26,13 @@ module.exports = buildSchema(
             title: String
             point: Int!
             favorites: [Favorite!]!
+            listOfPosts: [Post!]!
         }
         type Favorite{
+            id: ID!
+            name: String!
+        }
+        type Post{
             id: ID!
             name: String!
         }

@@ -74,6 +74,7 @@ exports.findItems = (req, res, next) => {
 };
 
 exports.createItem = (req, res, next) => {
+    const userId = req.body.userId;
     const name = req.body.name;
     const category = req.body.category;
     const price = req.body.price;
@@ -123,6 +124,14 @@ exports.createItem = (req, res, next) => {
         
             item.save()
                 .then(result => {
+                    if(userId){
+                        User.findById(userId)
+                            .then(user => {
+                                console.log(user);
+                                user.listOfPosts.unshift({ id: result.id, name: result.name});
+                                user.save();
+                            });
+                    }
                     res.status(201).json({
                         msg: "Success on creating an item post",
                         item: result
@@ -145,6 +154,14 @@ exports.createItem = (req, res, next) => {
     
         item.save()
             .then(result => {
+                if(userId){
+                    User.findById(userId)
+                        .then(user => {
+                            console.log(user);
+                            user.listOfPosts.unshift({ id: result.id, name: result.name});
+                            user.save();
+                        });
+                }
                 res.status(201).json({
                     msg: "Success on creating an item post",
                     item: result
