@@ -15,6 +15,7 @@ module.exports = buildSchema(
             image_id: String
             date: String!
             author: String!
+            likes: [String]
         }
         type User{
             _id: ID!
