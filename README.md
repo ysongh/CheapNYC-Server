@@ -81,6 +81,7 @@ Edit an user
 * Request - PUT
 * Params - Replace ':userId' with an id of an user
 * Required Fields - name(string)
+* Optional Fields - title(string)
 * Login is required
 
 Change the user image
