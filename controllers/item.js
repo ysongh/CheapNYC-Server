@@ -241,7 +241,9 @@ exports.findItemById = (req, res, next) => {
 };
 
 exports.likeItem = (req, res, next) => {
+    const userId = req.user.id;
     const itemId = req.params.itemId;
+    let itemData;
 
     Item.findById(itemId)
         .then(item => {
@@ -250,19 +252,39 @@ exports.likeItem = (req, res, next) => {
             }
             
             for(let like of item.likes){
-                if(like.toString() === req.user.id){
+                if(like.toString() === userId){
                     return res.status(400).json({alreadyliked: 'You already liked this post'});
                 }
             }
             
-            item.likes.unshift(req.user.id);
+            item.likes.unshift(userId);
             
             return item.save();
+        })
+        .then(item => {
+            if(!item){
+                return res.status(404).json({error: 'This post is not found'});
+            }
+            
+            itemData = item;
+            
+            User.findById(userId)
+                .then(user => {
+                    for(let favorite of user.favorites){
+                        if(favorite.id === itemId){
+                            return res.status(400).json({duplicate: 'You already favorite this post'});
+                        }
+                    }
+                    
+                    user.favorites.unshift({ id: itemId, name: item.name});
+                    return user.save();
+                })
+                .catch(err => console.log(err));
         })
         .then(result => {
             res.status(200).json({
                 msg: 'Success on liking that post',
-                item: result
+                item: itemData
             });
         })
         .catch(err => console.log(err));
@@ -300,37 +322,4 @@ exports.flagItem = (req, res, next) => {
             });
         })
         .catch(err => console.log(err));
-};
-
-exports.addFavorite = (req, res, next) => {
-    const itemId = req.params.itemId;
-    const userId = req.user.id;
-    
-    Item.findById(itemId)
-        .then(item => {
-            if(!item){
-                return res.status(404).json({error: 'This post is not found'});
-            }
-            
-            User.findById(userId)
-                .then(user => {
-                    for(let favorite of user.favorites){
-                        if(favorite.id === itemId){
-                            return res.status(400).json({duplicate: 'You already favorite this post'});
-                        }
-                    }
-                    
-                    user.favorites.unshift({ id: itemId, name: item.name});
-                    return user.save();
-                })
-                .then(result => {
-                    res.status(200).json({
-                        msg: 'Success on favoriting that post',
-                        user: result
-                    });
-                })
-                .catch(err => console.log(err));
-        })
-        .catch(err => console.log(err));
-        
 };
