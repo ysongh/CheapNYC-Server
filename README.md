@@ -62,7 +62,8 @@ Create a review
 * Link - https://cnycserver.herokuapp.com/items/:itemId/reviews
 * Request - POST
 * Params - Replace ':itemId' with an id of a item
-* Required Fields - name(string), rating(number), text(string)
+* Required Fields - rating(number), text(string)
+* Login is required
 
 ## User
 Create an user

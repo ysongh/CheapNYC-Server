@@ -4,8 +4,9 @@ const Item = require("../models/Item");
 const Review = require("../models/Review");
 
 exports.addReview = (req, res, next) => {
+    const userId = req.user.id;
     const itemId = req.params.itemId;
-    const name = req.body.name;
+    const name = req.user.name;
     const rating = req.body.rating;
     const text = req.body.text;
     let error;
@@ -24,6 +25,7 @@ exports.addReview = (req, res, next) => {
     }
 
     const reviewData = new Review({
+        userId: userId,
         itemId: itemId,
         name: name,
         rating: rating,

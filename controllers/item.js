@@ -127,7 +127,6 @@ exports.createItem = (req, res, next) => {
                     if(userId){
                         User.findById(userId)
                             .then(user => {
-                                console.log(user);
                                 user.listOfPosts.unshift({ id: result.id, name: result.name});
                                 user.save();
                             });

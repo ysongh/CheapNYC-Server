@@ -1,16 +1,13 @@
 const express = require("express");
+const passport = require('passport');
 const { body } = require("express-validator/check");
 
 const reviewController = require("../controllers/review");
 
 const router = express.Router();
 
-router.post('/:itemId/reviews',
+router.post('/:itemId/reviews', passport.authenticate('jwt', {session: false}),
     [
-        body('name')
-            .trim()
-            .isLength({min: 2, max: 30})
-            .withMessage('Please enter your name that is least 2 characters long and not longer than 30 characters'),
         body('rating')
             .isNumeric()
             .withMessage('Please enter a vaild number from 1 to 5')
