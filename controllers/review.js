@@ -7,6 +7,7 @@ exports.addReview = (req, res, next) => {
     const userId = req.user.id;
     const itemId = req.params.itemId;
     const name = req.user.name;
+    const image = req.user.image;
     const rating = req.body.rating;
     const text = req.body.text;
     let error;
@@ -28,6 +29,7 @@ exports.addReview = (req, res, next) => {
         userId: userId,
         itemId: itemId,
         name: name,
+        image: image,
         rating: rating,
         text: text
     });
