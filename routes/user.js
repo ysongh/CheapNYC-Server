@@ -17,8 +17,8 @@ router.post('/signup',
             .normalizeEmail()
             .withMessage('Please enter a vaild email'),
         body('password')
-            .isLength({min: 6, max: 20})
-            .withMessage('Please enter password that is at least 6 characters long and not longer than 20 characters'),
+            .isLength({min: 6, max: 40})
+            .withMessage('Please enter password that is at least 6 characters long and not longer than 40 characters'),
         body('confirmPassword').custom((value, { req }) => {
                 if (value !== req.body.password) {
                     throw new Error('Please make sure the that both passwords match');

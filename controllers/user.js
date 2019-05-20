@@ -17,6 +17,8 @@ cloudinary.config({
 
 exports.createUser = (req, res, next) => {
     const errors = validationResult(req);
+    let image = "";
+    
 
     if(!errors.isEmpty()){
         let errorList = {};
@@ -29,6 +31,10 @@ exports.createUser = (req, res, next) => {
         return res.status(422).json(errorList);
     }
     
+    if(req.body.image){
+        image = req.body.image;
+    }
+    
     User.findOne({ email: req.body.email })
         .then(user => {
             if(user){
@@ -38,7 +44,7 @@ exports.createUser = (req, res, next) => {
                 let newUser = new User({
                     name: req.body.name,
                     email: req.body.email,
-                    image: "",
+                    image: image,
                     image_id: "",
                     password: req.body.password
                 });
