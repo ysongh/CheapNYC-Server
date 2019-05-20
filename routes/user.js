@@ -35,8 +35,8 @@ router.post('/login',
             .normalizeEmail()
             .withMessage('Please enter a vaild email'),
         body('password')
-            .isLength({min: 5, max: 20})
-            .withMessage('Please enter password that is at least 5 characters long and not longer than 20 characters')
+            .isLength({min: 6, max: 40})
+            .withMessage('Please enter password that is at least 6 characters long and not longer than 40 characters')
     ],
     userController.login);
     
