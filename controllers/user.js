@@ -63,14 +63,46 @@ exports.createUser = (req, res, next) => {
                                 
                                 newUser
                                     .save()
-                                    .then(user => res.json(user))
+                                    .then(user => {
+                                        const payload = {id: user.id, name: user.name, image: user.image};
+        
+                                        jwt.sign(
+                                            payload,
+                                            keys.secretOrKey,
+                                            {expiresIn: 3600},
+                                            (err, token) => {
+                                                if(err){
+                                                    return res.status(500).json({error: err});
+                                                }
+                                                res.json({
+                                                    success: 'Register Success',
+                                                    token: 'Bearer ' + token
+                                                });
+                                        });
+                                    })
                                     .catch(err => console.log(err));
                             });
                         }
                         else{
                             newUser
                                 .save()
-                                .then(user => res.json(user))
+                                .then(user => {
+                                    const payload = {id: user.id, name: user.name, image: user.image};
+        
+                                    jwt.sign(
+                                        payload,
+                                        keys.secretOrKey,
+                                        {expiresIn: 3600},
+                                        (err, token) => {
+                                            if(err){
+                                                return res.status(500).json({error: err});
+                                            }
+                                            res.json({
+                                                success: 'Register Success',
+                                                token: 'Bearer ' + token
+                                            });
+                                    });
+                                })
                                 .catch(err => console.log(err));
                         }
                     });
