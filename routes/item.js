@@ -2,11 +2,12 @@ const express = require("express");
 const passport = require('passport');
 const { body } = require("express-validator/check");
 
+const middleware = require("../middleware/index.js");
 const itemController = require("../controllers/item");
 
 const router = express.Router();
 
-router.get('/', itemController.findItems);
+router.get('/', middleware.checkExpiredDate,  itemController.findItems);
 
 router.post('/',
     [
