@@ -40,6 +40,14 @@ const itemSchema = new Schema({
         type: Date,
         default: Date.now
     },
+    duration: {
+        type: Number,
+        default: 7
+    },
+    isExpired: {
+        type: Boolean,
+        default: false
+    },
     author: {
         type: String
     },

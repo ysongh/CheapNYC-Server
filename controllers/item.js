@@ -60,7 +60,7 @@ exports.findItems = (req, res, next) => {
                 });
             break;
         default:
-            Item.find()
+            Item.find({ isExpired: false })
                 .sort('-date')
                 .then(result => {
                     res.status(200).json({

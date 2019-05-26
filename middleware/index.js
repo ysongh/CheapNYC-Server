@@ -5,7 +5,7 @@ module.exports = {
         let currentDate = new Date();
         let total = 0;
         let count = 0;
-        Item.find()
+        Item.find({ isExpired: false })
             .then(result => {
                 for(let i in result){
                     let itemDate = result[i].date;
