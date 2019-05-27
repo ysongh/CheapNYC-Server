@@ -74,7 +74,7 @@ exports.findItems = (req, res, next) => {
     }
 };
 
-exports.createItem = (req, res, next) => {
+exports.createItem = async (req, res, next) => {
     const userId = req.body.userId;
     const name = req.body.name;
     const category = req.body.category;
@@ -84,13 +84,12 @@ exports.createItem = (req, res, next) => {
     const description = req.body.description;
     const company = req.body.company;
     let author = "Guest";
-    let image;
-    let image_id;
+    let image = "";
+    let image_id = "";
     
     if(req.body.author){
         author = req.body.author;
     }
-    
     
     const errors = validationResult(req);
 
@@ -106,69 +105,38 @@ exports.createItem = (req, res, next) => {
     }
     
     if(req.file){
-        cloudinary.uploader.upload(req.file.path, result => {
+        await cloudinary.uploader.upload(req.file.path, result => {
             image = result.secure_url;
             image_id = result.public_id;
-            
-            const item = new Item({
-                image: image,
-                image_id: image_id,
-                name: name,
-                category: category,
-                price: price,
-                location: location,
-                city: city,
-                description: description,
-                company: company,
-                author: author
-            });
-        
-            item.save()
-                .then(result => {
-                    if(userId){
-                        User.findById(userId)
-                            .then(user => {
-                                user.listOfPosts.unshift({ id: result.id, name: result.name});
-                                user.save();
-                            });
-                    }
-                    res.status(201).json({
-                        msg: "Success on creating an item post",
-                        item: result
-                    });
-                })
-                .catch(err => console.log(err));
         });
     }
-    else{
-        const item = new Item({
-            name: name,
-            category: category,
-            price: price,
-            location: location,
-            city: city,
-            description: description,
-            company: company,
-            author: author
-        });
+    const item = new Item({
+        image: image,
+        image_id: image_id,
+        name: name,
+        category: category,
+        price: price,
+        location: location,
+        city: city,
+        description: description,
+        company: company,
+        author: author
+    });
     
-        item.save()
-            .then(result => {
-                if(userId){
-                    User.findById(userId)
-                        .then(user => {
-                            console.log(user);
-                            user.listOfPosts.unshift({ id: result.id, name: result.name});
-                            user.save();
-                        });
-                }
-                res.status(201).json({
-                    msg: "Success on creating an item post",
-                    item: result
-                });
-            })
-            .catch(err => console.log(err));
+    const result = await item.save();
+    
+    if(userId){
+        await User.findById(userId)
+            .then(user => {
+                user.listOfPosts.unshift({ id: result.id, name: result.name});
+                user.save();
+            });
     }
+        
+    res.status(201).json({
+        msg: "Success on creating an item post",
+        item: result
+    });
 };
 
 exports.editItem = (req, res, next) => {

@@ -15,11 +15,11 @@ cloudinary.config({
     api_secret: cloudinaryApiSecret
 });
 
-exports.createUser = (req, res, next) => {
+exports.createUser = async (req, res, next) => {
     const errors = validationResult(req);
     let image = "";
+    let image_id = "";
     
-
     if(!errors.isEmpty()){
         let errorList = {};
 
@@ -31,84 +31,56 @@ exports.createUser = (req, res, next) => {
         return res.status(422).json(errorList);
     }
     
-    if(req.body.image){
-        image = req.body.image;
+    const existUser = await User.findOne({ email: req.body.email });
+    
+    if(existUser){
+        return res.status(400).json({email: 'Email Already Exists'});
     }
     
-    User.findOne({ email: req.body.email })
-        .then(user => {
-            if(user){
-                return res.status(400).json({email: 'Email Already Exists'});
-            }
-            else{
-                let newUser = new User({
-                    name: req.body.name,
-                    email: req.body.email,
-                    image: image,
-                    image_id: "",
-                    password: req.body.password
-                });
-
-                bcrypt.genSalt(10, (err, salt) => {
-                    bcrypt.hash(newUser.password, salt, (err, hash) => {
-                        if(err){
-                            return res.status(500).json({error: err});
-                        }
-                        newUser.password = hash;
-                        
-                        if(req.file){
-                            cloudinary.uploader.upload(req.file.path, result => {
-                                newUser.image = result.secure_url;
-                                newUser.image_id = result.public_id;
-                                
-                                newUser
-                                    .save()
-                                    .then(user => {
-                                        const payload = {id: user.id, name: user.name, image: user.image};
-        
-                                        jwt.sign(
-                                            payload,
-                                            keys.secretOrKey,
-                                            {expiresIn: 3600},
-                                            (err, token) => {
-                                                if(err){
-                                                    return res.status(500).json({error: err});
-                                                }
-                                                res.json({
-                                                    success: 'Register Success',
-                                                    token: 'Bearer ' + token
-                                                });
-                                        });
-                                    })
-                                    .catch(err => console.log(err));
-                            });
-                        }
-                        else{
-                            newUser
-                                .save()
-                                .then(user => {
-                                    const payload = {id: user.id, name: user.name, image: user.image};
-        
-                                    jwt.sign(
-                                        payload,
-                                        keys.secretOrKey,
-                                        {expiresIn: 3600},
-                                        (err, token) => {
-                                            if(err){
-                                                return res.status(500).json({error: err});
-                                            }
-                                            res.json({
-                                                success: 'Register Success',
-                                                token: 'Bearer ' + token
-                                            });
-                                    });
-                                })
-                                .catch(err => console.log(err));
-                        }
-                    });
-                });
-            }
+    if(req.file){
+        await cloudinary.uploader.upload(req.file.path, result => {
+            image = result.secure_url;
+            image_id = result.public_id;
         });
+    }
+    
+    let newUser = new User({
+        name: req.body.name,
+        email: req.body.email,
+        image: image,
+        image_id: image_id,
+        password: req.body.password
+    });
+    
+    bcrypt.genSalt(10, (err, salt) => {
+        bcrypt.hash(newUser.password, salt, (err, hash) => {
+            if(err){
+                return res.status(500).json({error: err});
+            }
+            newUser.password = hash;
+                                
+            newUser
+                .save()
+                .then(user => {
+                    const payload = {id: user.id, name: user.name, image: user.image};
+
+                    jwt.sign(
+                        payload,
+                        keys.secretOrKey,
+                        {expiresIn: 3600},
+                        (err, token) => {
+                            if(err){
+                                return res.status(500).json({error: err});
+                            }
+                            res.json({
+                                success: 'Register Success',
+                                token: 'Bearer ' + token
+                            });
+                    });
+                })
+                .catch(err => console.log(err));
+        });
+    });
 };
 
 exports.login = (req, res) => {
