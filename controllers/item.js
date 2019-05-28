@@ -83,6 +83,7 @@ exports.createItem = async (req, res, next) => {
     const city = req.body.city;
     const description = req.body.description;
     const company = req.body.company;
+    const duration = req.body.duration;
     let author = "Guest";
     let image = "";
     let image_id = "";
@@ -120,6 +121,7 @@ exports.createItem = async (req, res, next) => {
         city: city,
         description: description,
         company: company,
+        duration: duration,
         author: author
     });
     
