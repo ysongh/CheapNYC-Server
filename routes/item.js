@@ -19,7 +19,7 @@ router.post('/',
             .isLength({min: 2, max: 30})
             .withMessage('Please select the Category'),
         body('price')
-            .isNumeric()
+            .isCurrency()
             .withMessage('Please enter a vaild price, ex - 1.99'),
         body('location')
             .isLength({min: 10, max: 70})
