@@ -26,7 +26,8 @@ Create an item post
 * Link - https://cnycserver.herokuapp.com/items
 * Request - POST
 * Required Fields - name(string), category(string), price(number), location(string), city(string), description(string), company(string)
-* Optional Fields - image(file), author(string)
+* Optional Fields - image(file)
+* Login is required
 
 Find an item by id
 * Link - https://cnycserver.herokuapp.com/items/:itemId
@@ -38,6 +39,8 @@ Edit an item by id
 * Request - Put
 * Params - Replace ':itemId' with an id of a item
 * Required Fields - name(string), category(string), price(number), location(string), city(string), description(string), company(string)
+* Optional Fields - image(file)
+* Login is required
 
 Like an item by id
 * Link - https://cnycserver.herokuapp.com/items/:itemId/like

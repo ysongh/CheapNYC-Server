@@ -9,7 +9,7 @@ const router = express.Router();
 
 router.get('/', middleware.checkExpiredDate,  itemController.findItems);
 
-router.post('/',
+router.post('/', passport.authenticate('jwt', {session: false}),
     [
         body('name')
             .trim()
@@ -39,7 +39,7 @@ router.post('/',
     
 router.get('/:itemId', itemController.findItemById);
 
-router.put('/:itemId',
+router.put('/:itemId', passport.authenticate('jwt', {session: false}),
     [
         body('name')
             .trim()

@@ -48,6 +48,9 @@ const itemSchema = new Schema({
         type: Boolean,
         default: false
     },
+    userId: {
+        type: String
+    },
     author: {
         type: String
     },

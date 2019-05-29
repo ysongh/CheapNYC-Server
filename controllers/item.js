@@ -75,7 +75,8 @@ exports.findItems = (req, res, next) => {
 };
 
 exports.createItem = async (req, res, next) => {
-    const userId = req.body.userId;
+    const userId = req.user.id;
+    const author = req.user.name;
     const name = req.body.name;
     const category = req.body.category;
     const price = req.body.price;
@@ -84,13 +85,8 @@ exports.createItem = async (req, res, next) => {
     const description = req.body.description;
     const company = req.body.company;
     const duration = req.body.duration;
-    let author = "Guest";
     let image = "";
     let image_id = "";
-    
-    if(req.body.author){
-        author = req.body.author;
-    }
     
     const errors = validationResult(req);
 
@@ -122,18 +118,17 @@ exports.createItem = async (req, res, next) => {
         description: description,
         company: company,
         duration: duration,
-        author: author
+        author: author,
+        userId: userId
     });
     
     const result = await item.save();
     
-    if(userId){
-        await User.findById(userId)
-            .then(user => {
-                user.listOfPosts.unshift({ id: result.id, name: result.name});
-                user.save();
-            });
-    }
+    await User.findById(userId)
+        .then(user => {
+            user.listOfPosts.unshift({ id: result.id, name: result.name});
+            user.save();
+        });
         
     res.status(201).json({
         msg: "Success on creating an item post",
