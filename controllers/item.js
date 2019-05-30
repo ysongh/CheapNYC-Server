@@ -107,6 +107,7 @@ exports.createItem = async (req, res, next) => {
             image_id = result.public_id;
         });
     }
+    
     const item = new Item({
         image: image,
         image_id: image_id,
@@ -136,7 +137,7 @@ exports.createItem = async (req, res, next) => {
     });
 };
 
-exports.editItem = (req, res, next) => {
+exports.editItem = async (req, res, next) => {
     const itemId = req.params.itemId;
     const name = req.body.name;
     const category = req.body.category;
@@ -145,8 +146,6 @@ exports.editItem = (req, res, next) => {
     const city = req.body.city;
     const description = req.body.description;
     const company = req.body.company;
-    let image;
-    let image_id;
     
     const errors = validationResult(req);
 
@@ -161,31 +160,45 @@ exports.editItem = (req, res, next) => {
         return res.status(422).json(errorList);
     }
     
-    Item.findById(itemId)
-        .then(item => {
-            if(!item){
-                return res.status(404).json({error: 'This post is not found'});
-            }
-            
-            item.name = name;
-            item.category = category;
-            item.price = price;
-            item.location = location;
-            item.city = city;
-            item.description = description;
-            item.company = company;
-            
-            return item.save();
-        })
-        .then(result => {
-            res.status(201).json({
-                msg: "Success on editing that post",
-                item: result
+    let itemData = await Item.findById(itemId);
+    
+    if(!itemData){
+        return res.status(404).json({error: 'This post is not found'});
+    }
+    
+    if(itemData.userId !== req.user.id){
+        return res.status(404).json({error: 'You cannot edit this deal'});
+    }
+     
+    itemData.name = name;
+    itemData.category = category;
+    itemData.price = price;
+    itemData.location = location;
+    itemData.city = city;
+    itemData.description = description;
+    itemData.company = company;
+    
+    if(req.file){
+        if(itemData.image_id){
+            cloudinary.uploader.destroy(itemData.image_id, (result, err) => {
+                if(err){
+                    console.log(err);
+                }
             });
-        })
-        .catch(err => {
-            return res.status(500).json({error: err});
+        }
+        
+        await cloudinary.uploader.upload(req.file.path, result => {
+            itemData.image = result.secure_url;
+            itemData.image_id = result.public_id;
         });
+    }
+    
+    await itemData.save();
+    
+    res.status(201).json({
+        msg: "Success on editing that post",
+        item: itemData
+    });
 };
 
 exports.findItemById = (req, res, next) => {
