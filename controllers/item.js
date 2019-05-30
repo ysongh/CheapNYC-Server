@@ -14,7 +14,7 @@ cloudinary.config({
 
 exports.findItems = async (req, res, next) => {
     const page = req.query.page || 1;
-    const numberOfDeals = 8;
+    const numberOfDeals = 12;
     
     const totalDeals = await Item.find({ isExpired: false }).countDocuments();
 
