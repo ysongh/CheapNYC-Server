@@ -12,66 +12,26 @@ cloudinary.config({
     api_secret: cloudinaryApiSecret
 });
 
-exports.findItems = (req, res, next) => {
-    const type = req.query.type;
+exports.findItems = async (req, res, next) => {
+    const page = req.query.page || 1;
+    const numberOfDeals = 8;
     
-    switch(type){
-        case 'category':
-            const categoryName = req.query.categoryName;
-            
-            Item.find({category: categoryName})
-                .then(result => {
-                    res.status(200).json({
-                        msg: "Success on finding all items on category " + categoryName,
-                        items: result
-                    });
-                })
-                .catch(err => {
-                    return res.status(500).json({error: err});
-                });
-            break;
-        case 'city':
-            const cityName = req.query.cityName;
-            
-            Item.find({city: cityName})
-                .then(result => {
-                    res.status(200).json({
-                        msg: "Success on finding all items in " + cityName,
-                        items: result
-                    });
-                })
-                .catch(err => {
-                    return res.status(500).json({error: err});
-                });
-            break;
-        case 'price':
-            const lowPrice = req.query.price1;
-            const highPrice = req.query.price2;
-            
-            Item.find({price: {$lte: highPrice, $gte:lowPrice}})
-                .then(result => {
-                    res.status(200).json({
-                        msg: "Success on finding all items with price range from $" + lowPrice + " to $" + highPrice,
-                        items: result
-                    });
-                })
-                .catch(err => {
-                    return res.status(500).json({error: err});
-                });
-            break;
-        default:
-            Item.find({ isExpired: false })
-                .sort('-date')
-                .then(result => {
-                    res.status(200).json({
-                        msg: "Success on finding all items",
-                        items: result
-                    });
-                })
-                .catch(err => {
-                    return res.status(500).json({error: err});
-                });
-    }
+    const totalDeals = await Item.find({ isExpired: false }).countDocuments();
+
+    Item.find({ isExpired: false })
+        .sort('-date')
+        .skip((page - 1) * numberOfDeals)
+        .limit(numberOfDeals)
+        .then(result => {
+            res.status(200).json({
+                msg: "Success on finding all items",
+                items: result,
+                totalDeals: totalDeals
+            });
+        })
+        .catch(err => {
+            return res.status(500).json({error: err});
+        });
 };
 
 exports.createItem = async (req, res, next) => {
