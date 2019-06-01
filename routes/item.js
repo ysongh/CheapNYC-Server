@@ -66,6 +66,8 @@ router.put('/:itemId', passport.authenticate('jwt', {session: false}),
             .withMessage('Please enter a name company that is least 2 characters long and not longer than 50 characters')
     ],
     itemController.editItem);
+    
+router.delete('/:itemId', passport.authenticate('jwt', {session: false}), itemController.removeItem);
 
 router.put('/:itemId/like', passport.authenticate('jwt', {session: false}), itemController.likeItem);
 

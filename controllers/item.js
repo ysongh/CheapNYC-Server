@@ -161,6 +161,27 @@ exports.editItem = async (req, res, next) => {
     });
 };
 
+exports.removeItem = (req, res, next) => {
+    const itemId = req.params.itemId;
+    Item.findById(itemId)
+        .then(item => {
+            if(!item){
+                return res.status(404).json({error: 'This deal is not found'});
+            }
+            
+            return Item.findByIdAndRemove(itemId);
+        })
+        .then(result => {
+            res.status(200).json({
+                msg: 'Success on deleting that deal',
+                item: result
+            });
+        })
+        .catch(err => {
+            return res.status(500).json({error: err});
+        });
+};
+
 exports.findItemById = (req, res, next) => {
     const itemId = req.params.itemId;
 
