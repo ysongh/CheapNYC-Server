@@ -169,6 +169,10 @@ exports.removeItem = (req, res, next) => {
                 return res.status(404).json({error: 'This deal is not found'});
             }
             
+            if(item.userId.toString() !== req.user.id){
+                return res.status(403).json({error: 'You are not allow to delete this deal'});
+            }
+            
             return Item.findByIdAndRemove(itemId);
         })
         .then(result => {

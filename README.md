@@ -42,6 +42,12 @@ Edit an item by id
 * Optional Fields - image(file)
 * Login is required
 
+Remove an item by id
+* Link - https://cnycserver.herokuapp.com/items/:itemId
+* Request - DELETE
+* Params - Replace ':itemId' with an id of a item
+* Login is required
+
 Like an item by id
 * Link - https://cnycserver.herokuapp.com/items/:itemId/like
 * Request - PUT
