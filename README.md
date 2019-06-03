@@ -25,8 +25,8 @@ Find all items posts by price range
 Create an item post
 * Link - https://cnycserver.herokuapp.com/items
 * Request - POST
-* Required Fields - name(string), category(string), price(number), location(string), city(string), description(string), company(string)
-* Optional Fields - image(file)
+* Required Fields - name(string), category(string), price(number), location(string), city(string), description(string), company(string), duration(number)
+* Optional Fields - image(file), website(string), startDate(string), endDate(string)
 * Login is required
 
 Find an item by id
@@ -38,8 +38,8 @@ Edit an item by id
 * Link - https://cnycserver.herokuapp.com/items/:itemId
 * Request - Put
 * Params - Replace ':itemId' with an id of a item
-* Required Fields - name(string), category(string), price(number), location(string), city(string), description(string), company(string)
-* Optional Fields - image(file)
+* Required Fields - name(string), category(string), price(number), location(string), city(string), description(string), company(string), duration(number)
+* Optional Fields - image(file), website(string), startDate(string), endDate(string)
 * Login is required
 
 Remove an item by id

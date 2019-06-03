@@ -36,13 +36,18 @@ const itemSchema = new Schema({
     image_id: {
         type: String
     },
+    website: {
+        type: String
+    },
     date: {
         type: Date,
         default: Date.now
     },
+    startDate: {
+        type: String
+    },
     endDate: {
-        type: Date,
-        default: Date.now
+        type: String
     },
     duration: {
         type: Number,

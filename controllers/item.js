@@ -44,7 +44,9 @@ exports.createItem = async (req, res, next) => {
     const city = req.body.city;
     const description = req.body.description;
     const company = req.body.company;
+    const website = req.body.website;
     const duration = req.body.duration;
+    const startDate = req.body.startDate;
     const endDate = req.body.endDate;
     let image = "";
     let image_id = "";
@@ -79,7 +81,9 @@ exports.createItem = async (req, res, next) => {
         city: city,
         description: description,
         company: company,
+        website: website,
         duration: duration,
+        startDate: startDate,
         endDate: endDate,
         author: author,
         userId: userId
@@ -108,8 +112,10 @@ exports.editItem = async (req, res, next) => {
     const city = req.body.city;
     const description = req.body.description;
     const company = req.body.company;
+    const website = req.body.website;
     const duration = req.body.duration;
     const endDate = req.body.endDate;
+    const startDate = req.body.startDate;
     
     const errors = validationResult(req);
 
@@ -142,6 +148,8 @@ exports.editItem = async (req, res, next) => {
     itemData.description = description;
     itemData.company = company;
     itemData.duration = duration;
+    itemData.website = website;
+    itemData.startDate = startDate;
     itemData.endDate = endDate;
     
     if(req.file){
