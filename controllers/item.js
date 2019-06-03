@@ -45,6 +45,7 @@ exports.createItem = async (req, res, next) => {
     const description = req.body.description;
     const company = req.body.company;
     const duration = req.body.duration;
+    const endDate = req.body.endDate;
     let image = "";
     let image_id = "";
     
@@ -79,6 +80,7 @@ exports.createItem = async (req, res, next) => {
         description: description,
         company: company,
         duration: duration,
+        endDate: endDate,
         author: author,
         userId: userId
     });
@@ -106,6 +108,8 @@ exports.editItem = async (req, res, next) => {
     const city = req.body.city;
     const description = req.body.description;
     const company = req.body.company;
+    const duration = req.body.duration;
+    const endDate = req.body.endDate;
     
     const errors = validationResult(req);
 
@@ -137,6 +141,8 @@ exports.editItem = async (req, res, next) => {
     itemData.city = city;
     itemData.description = description;
     itemData.company = company;
+    itemData.duration = duration;
+    itemData.endDate = endDate;
     
     if(req.file){
         if(itemData.image_id){

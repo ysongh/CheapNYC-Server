@@ -40,6 +40,10 @@ const itemSchema = new Schema({
         type: Date,
         default: Date.now
     },
+    endDate: {
+        type: Date,
+        default: Date.now
+    },
     duration: {
         type: Number,
         default: 7
