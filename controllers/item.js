@@ -175,29 +175,33 @@ exports.editItem = async (req, res, next) => {
     });
 };
 
-exports.removeItem = (req, res, next) => {
+exports.removeItem = async (req, res, next) => {
     const itemId = req.params.itemId;
-    Item.findById(itemId)
-        .then(item => {
-            if(!item){
-                return res.status(404).json({error: 'This deal is not found'});
+    
+    const itemData = await Item.findById(itemId);
+    
+    if(!itemData){
+        return res.status(404).json({error: 'This deal is not found'});
+    }
+    
+    if(itemData.userId.toString() !== req.user.id){
+        return res.status(403).json({error: 'You are not allow to delete this deal'});
+    }
+    
+    if(itemData.image_id){
+        await cloudinary.uploader.destroy(itemData.image_id, (result, err) => {
+            if(err){
+                console.log(err);
             }
-            
-            if(item.userId.toString() !== req.user.id){
-                return res.status(403).json({error: 'You are not allow to delete this deal'});
-            }
-            
-            return Item.findByIdAndRemove(itemId);
-        })
-        .then(result => {
-            res.status(200).json({
-                msg: 'Success on deleting that deal',
-                item: result
-            });
-        })
-        .catch(err => {
-            return res.status(500).json({error: err});
         });
+    }
+        
+    await Item.findByIdAndRemove(itemId);
+    
+    res.status(200).json({
+        msg: 'Success on deleting that deal',
+        item: itemData
+    });
 };
 
 exports.findItemById = (req, res, next) => {
