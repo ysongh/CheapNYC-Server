@@ -39,7 +39,7 @@ module.exports = buildSchema(
         }
         type Query {
             items: [Item!]!
-            itemsByFilter(category: String!, city: String!, price1: Int!, price2: Int!): [Item!]!
+            itemsByFilter(category: String!, city: String!, price1: Int!, price2: Int!, page: Int!): [Item!]!
             users: [User!]!
             userById(id: ID!): User! 
         }

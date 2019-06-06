@@ -37,10 +37,18 @@ module.exports = {
                 console.log(err);
             });
     },
-    itemsByFilter:({ category, city, price1, price2 }) => {
+    itemsByFilter: async ({ category, city, price1, price2, page }) => {
+        const pageNumber = page || 2;
+        const numberOfDeals = 12;
+        let totalDeals;
+        
         if(category && city && price1 !== -1){
-            return Item.find({ category: category, city: city, price: {$lte: price2, $gte:price1} })
+            totalDeals = await Item.find({ category: category, city: city, price: {$lte: price2, $gte:price1}, isExpired: false }).countDocuments();
+            
+            return Item.find({ category: category, city: city, price: {$lte: price2, $gte:price1}, isExpired: false })
                 .sort('-date')
+                .skip((pageNumber - 1) * numberOfDeals)
+                .limit(numberOfDeals)
                 .then(items => {
                     return items.map(item => {
                         return { ...item._doc, _id: item.id };
@@ -51,8 +59,12 @@ module.exports = {
                 });
         }
         if(category && city && price1 === -1){
-            return Item.find({ category: category, city: city })
+            totalDeals = Item.find({ category: category, city: city, isExpired: false }).countDocuments();
+            
+            return Item.find({ category: category, city: city, isExpired: false })
                 .sort('-date')
+                .skip((pageNumber - 1) * numberOfDeals)
+                .limit(numberOfDeals)
                 .then(items => {
                     return items.map(item => {
                         return { ...item._doc, _id: item.id };
@@ -63,8 +75,12 @@ module.exports = {
                 });
         }
         if(category && !city && price1 !== -1){
-            return Item.find({ category: category, price: {$lte: price2, $gte:price1} })
+            totalDeals = Item.find({ category: category, price: {$lte: price2, $gte:price1}, isExpired: false }).countDocuments();
+            
+            return Item.find({ category: category, price: {$lte: price2, $gte:price1}, isExpired: false })
                 .sort('-date')
+                .skip((pageNumber - 1) * numberOfDeals)
+                .limit(numberOfDeals)
                 .then(items => {
                     return items.map(item => {
                         return { ...item._doc, _id: item.id };
@@ -75,8 +91,12 @@ module.exports = {
                 });
         }
         if(!category && city && price1 !== -1){
-            return Item.find({ city: city, price: {$lte: price2, $gte:price1} })
+            totalDeals = Item.find({ city: city, price: {$lte: price2, $gte:price1}, isExpired: false }).countDocuments();
+            
+            return Item.find({ city: city, price: {$lte: price2, $gte:price1}, isExpired: false })
                 .sort('-date')
+                .skip((pageNumber - 1) * numberOfDeals)
+                .limit(numberOfDeals)
                 .then(items => {
                     return items.map(item => {
                         return { ...item._doc, _id: item.id };
@@ -87,8 +107,12 @@ module.exports = {
                 });
         }
         if(category && !city && price1 === -1){
-            return Item.find({ category: category })
+            totalDeals = Item.find({ category: category, isExpired: false }).countDocuments();
+            
+            return Item.find({ category: category, isExpired: false })
                 .sort('-date')
+                .skip((pageNumber - 1) * numberOfDeals)
+                .limit(numberOfDeals)
                 .then(items => {
                     return items.map(item => {
                         return { ...item._doc, _id: item.id };
@@ -99,8 +123,12 @@ module.exports = {
                 });
         }
         if(!category && city && price1 === -1){
-            return Item.find({ city: city })
+            totalDeals = Item.find({ city: city, isExpired: false }).countDocuments();
+            
+            return Item.find({ city: city, isExpired: false })
                 .sort('-date')
+                .skip((pageNumber - 1) * numberOfDeals)
+                .limit(numberOfDeals)
                 .then(items => {
                     return items.map(item => {
                         return { ...item._doc, _id: item.id };
@@ -111,8 +139,12 @@ module.exports = {
                 });
         }
         if(!category && !city && price1 !== -1){
-            return Item.find({ price: {$lte: price2, $gte:price1} })
+            totalDeals = Item.find({ price: {$lte: price2, $gte:price1}, isExpired: false }).countDocuments();
+            
+            return Item.find({ price: {$lte: price2, $gte:price1}, isExpired: false })
                 .sort('-date')
+                .skip((pageNumber - 1) * numberOfDeals)
+                .limit(numberOfDeals)
                 .then(items => {
                     return items.map(item => {
                         return { ...item._doc, _id: item.id };
@@ -123,8 +155,12 @@ module.exports = {
                 });
         }
         if(!category && !city && price1 === -1){
-            return Item.find()
+            totalDeals = Item.find({isExpired: false}).countDocuments();
+            
+            return Item.find({isExpired: false})
                 .sort('-date')
+                .skip((pageNumber - 1) * numberOfDeals)
+                .limit(numberOfDeals)
                 .then(items => {
                     return items.map(item => {
                         return { ...item._doc, _id: item.id };
