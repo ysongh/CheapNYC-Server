@@ -37,8 +37,12 @@ module.exports = buildSchema(
             id: ID!
             name: String!
         }
+        type Deals{
+            deals: [Item!]!
+            totalDeals: Int!
+        }
         type Query {
-            items: [Item!]!
+            items(page: Int): Deals!
             itemsByFilter(category: String!, city: String!, price1: Int!, price2: Int!, page: Int!): [Item!]!
             users: [User!]!
             userById(id: ID!): User! 

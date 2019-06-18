@@ -25,17 +25,23 @@ module.exports = {
                 console.log(err);
             });
     },
-    items:() => {
-        return Item.find()
+    items: async({ page }) => {
+        if(!page){
+            page = 1;
+        }
+        const numberOfDeals = 12;
+        const totalDeals = await Item.find({isExpired: false}).countDocuments();
+        const deals = await Item.find({isExpired: false})
             .sort('-date')
-            .then(items => {
-                return items.map(item => {
-                    return { ...item._doc, _id: item.id };
-                });
-            })
-            .catch(err => {
-                console.log(err);
-            });
+            .skip((page - 1) * numberOfDeals)
+            .limit(numberOfDeals);
+        
+        return {
+            deals: deals.map(item => {
+                return { ...item._doc, _id: item.id };
+            }),
+            totalDeals: totalDeals
+        };
     },
     itemsByFilter: async ({ category, city, price1, price2, page }) => {
         const pageNumber = page || 2;
