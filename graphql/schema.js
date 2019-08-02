@@ -6,7 +6,7 @@ module.exports = buildSchema(
             _id: ID!
             name: String!
             category: String!
-            price: Int!
+            price: Float!
             company: String!
             location: String!
             city: String!
