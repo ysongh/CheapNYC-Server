@@ -22,6 +22,11 @@ Find all items posts by price range
 * Request - GET
 * Params - Set type to price, put low number on price1 and high number on price2
 
+Find all items posts by name
+* Link - https://cnycserver.herokuapp.com/items/searchItemByName?name=pizza
+* Request - GET
+* Params - Set name to any item name
+
 Create an item post
 * Link - https://cnycserver.herokuapp.com/items
 * Request - POST

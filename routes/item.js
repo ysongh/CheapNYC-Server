@@ -36,7 +36,9 @@ router.post('/', passport.authenticate('jwt', {session: false}),
             .withMessage('Please enter a name company that is least 2 characters long and not longer than 50 characters')
     ],
     itemController.createItem);
-    
+
+router.get('/searchItemByName', itemController.searchItemByName);
+
 router.get('/:itemId', itemController.findItemById);
 
 router.put('/:itemId', passport.authenticate('jwt', {session: false}),

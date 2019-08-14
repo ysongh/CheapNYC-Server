@@ -34,6 +34,22 @@ exports.findItems = async (req, res, next) => {
         });
 };
 
+exports.searchItemByName = (req, res, next) => {
+    const itemName = req.query.name;
+    
+    Item.find({ 'name' : new RegExp(itemName, 'i') })
+        .sort('-date')
+        .then(result => {
+            res.status(200).json({
+                msg: "Success on finding all feed that match: " + itemName,
+                items: result
+            });
+        })
+        .catch(err => {
+            return res.status(500).json({error: err});
+        });
+}
+
 exports.createItem = async (req, res, next) => {
     const userId = req.user.id;
     const author = req.user.name;
