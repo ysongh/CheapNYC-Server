@@ -2,113 +2,209 @@
 
 REST API that allow anyone to post or view item or product
 
-## Item
-Find all items posts
-* Link - https://cnycserver.herokuapp.com/items?page=1
-* Request - GET
-* Params - Set page to page number
+## Deals Endpoint
 
-Find all items posts by category
-* Link - https://cnycserver.herokuapp.com/items?type=category&categoryName=food
-* Request - GET
-* Params - Set type to category and put any category on categoryName
+### Find all items posts
+GET https://cnycserver.herokuapp.com/items?page=1
 
-Find all items posts by city
-* Link - https://cnycserver.herokuapp.com/items?type=city&cityName=queen
-* Request - GET
-* Params - Set type to city and put any city on cityName
+#### Query String Parameters
+Name | Data Type | Description
+--- | --- | ---
+page | int | (Optional) Each page shows 8 deals.
 
-Find all items posts by price range
-* Link - https://cnycserver.herokuapp.com/items?type=price&price1=50&price2=100
-* Request - GET
-* Params - Set type to price, put low number on price1 and high number on price2
+### Find all items posts by category
+GET https://cnycserver.herokuapp.com/items?type=category&categoryName=Food
 
-Find all items posts by name
-* Link - https://cnycserver.herokuapp.com/items/searchItemByName?name=pizza&page=1
-* Request - GET
-* Params - Set name to any item name and page to page number
+#### Query String Parameters
+Name | Data Type | Description
+--- | --- | ---
+type | string | (Required) Set type equal to category.
+categoryName | string | (Required) Put the name of the category like Food, Events, Classes, or Others.
 
-Create an item post
-* Link - https://cnycserver.herokuapp.com/items
-* Request - POST
-* Required Fields - name(string), category(string), price(number), location(string), city(string), description(string), company(string), duration(number)
-* Optional Fields - image(file), website(string), startDate(string), endDate(string)
-* Login is required
+### Find all items posts by city
+GET https://cnycserver.herokuapp.com/items?type=city&cityName=queen
 
-Find an item by id
-* Link - https://cnycserver.herokuapp.com/items/:itemId
-* Request - GET
-* Params - Replace ':itemId' with an id of a item
+#### Query String Parameters
+Name | Data Type | Description
+--- | --- | ---
+type | string | (Required) Set type equal to city.
+cityName | string | (Required) Put the name of the city like Manhattan, Queens, Bronx, Brooklyn, or Staten Island.
 
-Edit an item by id
-* Link - https://cnycserver.herokuapp.com/items/:itemId
-* Request - Put
-* Params - Replace ':itemId' with an id of a item
-* Required Fields - name(string), category(string), price(number), location(string), city(string), description(string), company(string), duration(number)
-* Optional Fields - image(file), website(string), startDate(string), endDate(string)
-* Login is required
+### Find all items posts by price range
+GET https://cnycserver.herokuapp.com/items?type=price&price1=50&price2=100
 
-Remove an item by id
-* Link - https://cnycserver.herokuapp.com/items/:itemId
-* Request - DELETE
-* Params - Replace ':itemId' with an id of a item
-* Login is required
+#### Query String Parameters
+Name | Data Type | Description
+--- | ---- | ---
+type | string | (Required) Set type equal to price.
+price1 | decimal | (Required) Price1 must be less than price2.
+price2 | decimal | (Required) Price2 must be greater than price1.
 
-Like an item by id
-* Link - https://cnycserver.herokuapp.com/items/:itemId/like
-* Request - PUT
-* Params - Replace ':itemId' with an id of a item
-* Login is required
+### Find all items posts by name
+GET https://cnycserver.herokuapp.com/items/searchItemByName?name=pizza&page=1
 
-Flag an item by id
-* Link - https://cnycserver.herokuapp.com/items/:itemId/flag
-* Request - PUT
-* Params - Replace ':itemId' with an id of a item
-* Login is required
+#### Query String Parameters
+Name | Data Type | Description
+--- | ---- | ---
+name | string | (Optional) Enter the name of the deal
+page | int | (Optional) Each page shows 8 deals.
 
-## Review
-Create a review
-* Link - https://cnycserver.herokuapp.com/items/:itemId/reviews
-* Request - POST
-* Params - Replace ':itemId' with an id of a item
-* Required Fields - rating(number), text(string)
-* Login is required
+### Create an item post (*Login Required*)
+POST https://cnycserver.herokuapp.com/items
 
-## User
-Create an user
-* Link - https://cnycserver.herokuapp.com/users/signup
-* Request - POST
-* Required Fields - name(string), email(string), password(string), confirmPassword(string)
-* Optional Fields - image(file)
+#### Request Body Parameters
+Name | Data Type | Description
+--- | ---- | ---
+name | string | (Required) Name of the deal.
+category | string | (Required) Category of the deal like Food, Events, Classes, or Others.
+price | decimal | (Required) Price of the deal.
+location | string | (Required) Location of where to get the deals
+city | string | (Required)  Manhattan, Queens, Bronx, Brooklyn, or Staten Island.
+description | string | (Required) Details of the deal.
+company | string | (Required) Name of the company.
+duration | int | (Required) How long will the deal last?
+image | file | (Optional) Picture of the deal
+website | string | (Optional) Link to the website
+startDate | string | (Optional) When does the deal start?
+endDate | string | (Optional) When does the deal end?
 
-Login
-* Link - https://cnycserver.herokuapp.com/users/login
-* Request - POST
-* Required Fields - email(string), password(string)
+### Find an item by id
+GET https://cnycserver.herokuapp.com/items/:itemId
 
-Edit an user
-* Link - https://cnycserver.herokuapp.com/users/:userId/edit
-* Request - PUT
-* Params - Replace ':userId' with an id of an user
-* Required Fields - name(string)
-* Optional Fields - title(string)
-* Login is required
+#### Path Parameters
+URL Parameter | Description
+--- | ---
+:itemId | ID of the deals
 
-Change the user image
-* Link - https://cnycserver.herokuapp.com/users/:userId/edit-image
-* Request - PUT
-* Params - Replace ':userId' with an id of an user
-* Required Fields - image(file)
-* Login is required
+### Edit an item by id (*Login Required*)
+PUT https://cnycserver.herokuapp.com/items/:itemId
 
-## Report
-Find all reports
-* Link - https://cnycserver.herokuapp.com/items/report/allreport
-* Request - GET
+#### Path Parameters
+URL Parameter | Description
+--- | ---
+:itemId | ID of the deals
 
-Report an item
-* Link - https://cnycserver.herokuapp.com/items/:itemId/report
-* Request - POST
-* Params - Replace ':itemId' with an id of a item
-* Required Fields - text(string), comments(string)
-* Login is required
+#### Request Body Parameters
+Name | Data Type | Description
+--- | ---- | ---
+name | string | (Required) Name of the deal.
+category | string | (Required) Category of the deal like Food, Events, Classes, or Others.
+price | decimal | (Required) Price of the deal.
+location | string | (Required) Location of where to get the deals
+city | string | (Required)  Manhattan, Queens, Bronx, Brooklyn, or Staten Island.
+description | string | (Required) Details of the deal.
+company | string | (Required) Name of the company.
+duration | int | (Required) How long will the deal last?
+image | file | (Optional) Picture of the deal
+website | string | (Optional) Link to the website
+startDate | string | (Optional) When does the deal start?
+endDate | string | (Optional) When does the deal end?
+
+### Remove an item by id (*Login Required*)
+DELETE https://cnycserver.herokuapp.com/items/:itemId
+
+#### Path Parameters
+URL Parameter | Description
+--- | ---
+:itemId | ID of the deals
+
+### Like an item by id (*Login Required*)
+PUT https://cnycserver.herokuapp.com/items/:itemId/like
+
+#### Path Parameters
+URL Parameter | Description
+--- | ---
+:itemId | ID of the deals
+
+### Flag an item by id (*Login Required*)
+PUT https://cnycserver.herokuapp.com/items/:itemId/flag
+
+#### Path Parameters
+URL Parameter | Description
+--- | ---
+:itemId | ID of the deals
+
+## Review Endpoint
+
+### Create a review (*Login Required*)
+POST https://cnycserver.herokuapp.com/items/:itemId/reviews
+
+#### Path Parameters
+URL Parameter | Description
+--- | ---
+:itemId | ID of the deals
+
+#### Request Body Parameters
+Name | Data Type | Description
+--- | ---- | ---
+rating | int | (Required) Rating must be between 1 and 5.
+text | string | (Required) Comments on the deal
+
+## User Endpoint
+
+### Create an user
+POST https://cnycserver.herokuapp.com/users/signup
+
+#### Request Body Parameters
+Name | Data Type | Description
+--- | ---- | ---
+name | string | (Required) Name of the user.
+email | string | (Required) Email of the user.
+password | string | (Required) Password must be at least 6 characters.
+confirmPassword | string | (Required) Passwords must match.
+image | file | (Optional) Picture of the user.
+
+### Login
+POST https://cnycserver.herokuapp.com/users/login
+
+#### Request Body Parameters
+Name | Data Type | Description
+--- | ---- | ---
+email | string | (Required) Email of the user.
+password | string | (Required) Password must be at least 6 characters.
+
+### Edit an user information (*Login Required*)
+PUT https://cnycserver.herokuapp.com/users/:userId/edit
+
+#### Path Parameters
+URL Parameter | Description
+--- | ---
+:userId | ID of the user
+
+#### Request Body Parameters
+Name | Data Type | Description
+--- | ---- | ---
+name | string | (Required) Name of the user.
+title | string | (Optional) List of interest that the user likes.  Separate each interest by comma.
+
+### Change the user image (*Login Required*)
+PUT https://cnycserver.herokuapp.com/users/:userId/edit-image
+
+#### Path Parameters
+URL Parameter | Description
+--- | ---
+:userId | ID of the user
+
+#### Request Body Parameters
+Name | Data Type | Description
+--- | ---- | ---
+image | file | (Required) Picture of the user.
+
+## Report Endpoint
+
+### Find all reports
+GET https://cnycserver.herokuapp.com/items/report/allreport
+
+### Report a deal (*Login Required*)
+POST https://cnycserver.herokuapp.com/items/:itemId/report
+
+#### Path Parameters
+URL Parameter | Description
+--- | ---
+:itemId | ID of the deal
+
+#### Request Body Parameters
+Name | Data Type | Description
+--- | ---- | ---
+text | string | (Required) Type of report.
+comments | string | (Required) Comment on the report.
