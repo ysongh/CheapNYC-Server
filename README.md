@@ -4,8 +4,9 @@ REST API that allow anyone to post or view item or product
 
 ## Item
 Find all items posts
-* Link - https://cnycserver.herokuapp.com/items
+* Link - https://cnycserver.herokuapp.com/items?page=1
 * Request - GET
+* Params - Set page to page number
 
 Find all items posts by category
 * Link - https://cnycserver.herokuapp.com/items?type=category&categoryName=food
@@ -23,9 +24,9 @@ Find all items posts by price range
 * Params - Set type to price, put low number on price1 and high number on price2
 
 Find all items posts by name
-* Link - https://cnycserver.herokuapp.com/items/searchItemByName?name=pizza
+* Link - https://cnycserver.herokuapp.com/items/searchItemByName?name=pizza&page=1
 * Request - GET
-* Params - Set name to any item name
+* Params - Set name to any item name and page to page number
 
 Create an item post
 * Link - https://cnycserver.herokuapp.com/items

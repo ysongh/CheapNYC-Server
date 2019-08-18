@@ -34,15 +34,22 @@ exports.findItems = async (req, res, next) => {
         });
 };
 
-exports.searchItemByName = (req, res, next) => {
+exports.searchItemByName = async (req, res, next) => {
     const itemName = req.query.name;
+    const page = req.query.page || 1;
+    const numberOfDeals = 12;
     
-    Item.find({ 'name' : new RegExp(itemName, 'i') })
+    const totalDeals = await Item.find({ isExpired: false }).countDocuments();
+    
+    Item.find({ 'name' : new RegExp(itemName, 'i'), isExpired: false })
         .sort('-date')
+        .skip((page - 1) * numberOfDeals)
+        .limit(numberOfDeals)
         .then(result => {
             res.status(200).json({
                 msg: "Success on finding all feed that match: " + itemName,
-                items: result
+                items: result,
+                totalDeals: totalDeals
             });
         })
         .catch(err => {
