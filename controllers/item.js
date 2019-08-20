@@ -39,7 +39,7 @@ exports.searchItemByName = async (req, res, next) => {
     const page = req.query.page || 1;
     const numberOfDeals = 12;
     
-    const totalDeals = await Item.find({ isExpired: false }).countDocuments();
+    const totalDeals = await Item.find({ 'name' : new RegExp(itemName, 'i'), isExpired: false }).countDocuments();
     
     Item.find({ 'name' : new RegExp(itemName, 'i'), isExpired: false })
         .sort('-date')
