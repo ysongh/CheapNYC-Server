@@ -1,6 +1,10 @@
 # CheapNYC-Server
 REST API that allow anyone to post or view item or product
 
+- [Website](https://www.realcheapny.com/)
+- [Front End Code](https://github.com/electrone901/cheap-nyc-frontend-final)
+- [Mobile App Code](https://github.com/ysongh/CheapNYC-App)
+
 ## Table of Contents
 [Deals Endpoint](https://github.com/ysongh/CheapNYC-Server/tree/V4B#deals-endpoint)
 
