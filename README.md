@@ -6,13 +6,15 @@ REST API that allow anyone to post or view item or product
 - [Mobile App Code](https://github.com/ysongh/CheapNYC-App)
 
 ## Table of Contents
-[Deals Endpoint](https://github.com/ysongh/CheapNYC-Server/tree/V4B#deals-endpoint)
+[Deals Endpoint](https://github.com/ysongh/CheapNYC-Server/tree/master#deals-endpoint)
 
-[Review Endpoint](https://github.com/ysongh/CheapNYC-Server/tree/V4B#review-endpoint)
+[Review Endpoint](https://github.com/ysongh/CheapNYC-Server/tree/master#review-endpoint)
 
-[User Endpoint](https://github.com/ysongh/CheapNYC-Server/tree/V4B#user-endpoint)
+[User Endpoint](https://github.com/ysongh/CheapNYC-Server/tree/master#user-endpoint)
 
-[Report Endpoint](https://github.com/ysongh/CheapNYC-Server/tree/V4B#user-endpoint)
+[Report Endpoint](https://github.com/ysongh/CheapNYC-Server/tree/master#user-endpoint)
+
+[Start your own server locally](https://github.com/ysongh/CheapNYC-Server/tree/master#start-your-own-server-locally)
 
 ## Deals Endpoint
 + **Find all items posts**
@@ -259,3 +261,17 @@ Name | Data Type | Description
 --- | ---- | ---
 text | string | (Required) Type of report.
 comments | string | (Required) Comment on the report.
+
+## Start your own server locally
+- Clone the repo
+- Create a file called `keys_dev.js` in the config folder
+- Add the follow code to keys_dev.js:
+```
+module.exports = {
+    mongoURI: {Add a connection string from MongoDB Alta},
+    cloudinaryApiKey: {Add a Cloudinary Api Key from Cloudinary},
+    cloudinaryApiSecret: {Add a Cloudinary Api Secret from Cloudinary},
+    secretOrKey: {Enter a random string}
+};
+```
+- Run `npm i && npm run server`
