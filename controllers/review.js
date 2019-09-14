@@ -40,7 +40,7 @@ exports.addReview = (req, res, next) => {
                 throw new error(res.status(404).json({error: 'Item not found'}));
             }
             else{
-                item.reviews.push(reviewData);
+                item.reviews.unshift(reviewData);
                 return item.save();
             }
         })
