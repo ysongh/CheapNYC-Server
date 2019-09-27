@@ -22,6 +22,12 @@ const itemSchema = new Schema({
         type: String,
         required: true
     },
+    latitude: {
+        type: Number
+    },
+    longitude: {
+        type: Number
+    },
     city:{
         type: String,
         required: true
