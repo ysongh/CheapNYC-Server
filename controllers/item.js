@@ -117,6 +117,7 @@ exports.createItem = async (req, res, next) => {
     await User.findById(userId)
         .then(user => {
             user.listOfPosts.unshift({ id: result.id, name: result.name});
+            user.point += 10;
             user.save();
         });
         
