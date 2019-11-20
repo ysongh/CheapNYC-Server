@@ -206,3 +206,37 @@ exports.changeUserImage = (req, res) => {
             return res.status(500).json({error: err});
         });
 };
+
+exports.removeDealFromList = (req, res) => {
+    const userId = req.params.userId;
+    const dealId = req.params.dealId;
+    
+    User.findById(userId)
+        .then(user => {
+            if(!user){
+                return res.status(404).json({error: 'This user does not exist'});
+            }
+            
+            if(user._id.toString() !== req.user.id){
+                return res.status(403).json({error: 'You are not allow to edit this user'});
+            }
+
+            const len = user.listOfPosts.length;
+
+            for(let i = 0; i < len; i++){
+                if(user.listOfPosts[0].id === dealId){
+                    user.listOfPosts.splice(i, 1);
+                }
+            }
+            return user.save();
+        })
+        .then(result => {
+            res.status(200).json({
+                msg: 'Success on remove that deal from the list',
+                user: result
+            });
+        })
+        .catch(err => {
+            return res.status(500).json({error: err});
+        });
+};

@@ -51,4 +51,6 @@ router.put('/:userId/edit', passport.authenticate('jwt', {session: false}),
     
 router.put('/:userId/edit-image', passport.authenticate('jwt', {session: false}), userController.changeUserImage);
 
+router.put('/:userId/removeDeal/:dealId', passport.authenticate('jwt', {session: false}), userController.removeDealFromList);
+
 module.exports = router;
