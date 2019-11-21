@@ -221,10 +221,8 @@ exports.removeDealFromList = (req, res) => {
                 return res.status(403).json({error: 'You are not allow to edit this user'});
             }
 
-            const len = user.listOfPosts.length;
-
-            for(let i = 0; i < len; i++){
-                if(user.listOfPosts[0].id === dealId){
+            for(let i = 0; i < user.listOfPosts.length; i++){
+                if(user.listOfPosts[i].id === dealId){
                     user.listOfPosts.splice(i, 1);
                 }
             }
