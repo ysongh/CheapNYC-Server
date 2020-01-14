@@ -22,11 +22,15 @@ const itemSchema = new Schema({
         type: String,
         required: true
     },
-    latitude: {
-        type: Number
-    },
-    longitude: {
-        type: Number
+    address: {
+        type: {
+            type: String,
+            enum: ["Point"]
+        },
+        coordinates: {
+            type: [Number],
+            index: "2dsphere"
+        }
     },
     city:{
         type: String,
